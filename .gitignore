@@ -2,6 +2,12 @@
 *.docx
 *.DS_Store
 /myenv/
+/Woby_Log/
+/corpus/
+*keys*
+*key*
+*keys*.py
+*keys*.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

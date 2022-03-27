@@ -1,7 +1,25 @@
 # Final-Project-Group4
 Faireplace: Human-machine interactive storytelling engine.
 
-test
+# MongoDB
+* [Setup](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/)
+
+# Data Sources
+Stories were sourced from the following sub-reddits
+
+Number | Subreddit | Filters/Flairs Used | Link 
+| --- | --- | --- | --- |
+| 1. | r/nosleep | N/A| [Link](https://www.reddit.com/r/nosleep/) | 
+| 2. | r/stayawake | N/A| [Link](https://www.reddit.com/r/stayawake/) | 
+| 3. | r/DarkTales | N/A| [Link](https://www.reddit.com/r/DarkTales/) | 
+| 4. | r/LetsNotMeet | N/A| [Link](https://www.reddit.com/r/LetsNotMeet/) | 
+| 5. | r/shortscarystories | N/A| [Link](https://www.reddit.com/r/shortscarystories/) | 
+| 6. | r/Thetruthishere | N/A| [Link](https://www.reddit.com/r/Thetruthishere/) | 
+| 7. | r/creepyencounters | N/A| [Link](https://www.reddit.com/r/creepyencounters/) | 
+| 8. | r/truescarystories | N/A| [Link](https://www.reddit.com/r/TrueScaryStories/) | 
+| 9. | r/Glitch_in_the_Matrix | N/A| [Link](https://www.reddit.com/r/Glitch_in_the_Matrix/) | 
+| 10. | r/Paranormal | N/A| [Link](https://www.reddit.com/r/Paranormal/) | 
+| 11. | r/Ghoststories | N/A| [Link](https://www.reddit.com/r/Ghoststories/) | 
 
 # References
 
