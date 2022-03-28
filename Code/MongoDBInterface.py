@@ -59,12 +59,15 @@ class MongoDBInterface:
         if self.LOG_FILENAME:
             self.MY_LOGGER.info(f"{datetime.now()} -- [MONGODB INSERT] Insertion complete...")
 
-    def get_documents(self, show=False):
+    def get_documents(self, query={}, sort=[], limit=1, show=False):
         '''
         Method to retrieve documents from specified collection
 
         Params:
             self: instance of object
+            query (dict): default None if no query, {'aws_account_id': aws_account.account_number}
+            sort (list of tuple): default None if not sorting, sort=[( '_id', pymongo.DESCENDING )]
+            limit (int): default == 1 to find_one(), else find().limit(limit)
             show (Boolean): default False to not print out retrieved documents, True to print
         
         Returns:
@@ -72,7 +75,9 @@ class MongoDBInterface:
         '''
         documents = list()
 
-        for document in self.collection.find():
+        returned_documents = self.collection.find(query,sort=sort).limit(limit)
+
+        for document in returned_documents:
             if show:
                 print(document)
         
