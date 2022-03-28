@@ -42,7 +42,8 @@ def main():
     query = {}
     # 1 (for ascending) or -1 (for descending)
     sort = [('_id', -1)]
-    documents = woby_db.get_documents(sort=sort, limit=1, show=True)
+    projection = {'selftext':0}
+    documents = woby_db.get_documents(sort=sort, projection=projection, limit=1, show=True)
     try:
         print(documents[0]['doc_id'])
     except IndexError:

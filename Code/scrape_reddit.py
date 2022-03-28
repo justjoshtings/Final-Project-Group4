@@ -39,7 +39,7 @@ def main():
     parser.parse_response(res, db=woby_db, save_data=True)
 
     '''
-    Delete downloaded, Remove selftext from metadata
+    Delete downloaded
     Add corpus logs
     Add RedditAPI logs
     Complete MongoDBInterface logs
