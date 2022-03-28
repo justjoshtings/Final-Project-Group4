@@ -18,7 +18,7 @@ def main():
     database = 'woby_tales_corpus'
     collection = 'reddit_stories'
 
-    sample_story = {'story_id':'subreddit1_0', 
+    sample_story = {'story_id':'subreddit1_3', 
                     'subreddit_name':'subreddit1',
                     'post_title':'Sample Stoiry all the wayyyyywayyyyywayyyyywayyyyywayyyyywayyyyywayyyyywayyyyywayyyyywayyyyywayyyyywayyyyy',
                     'url':'www.google.com',
@@ -36,9 +36,17 @@ def main():
     delete_query = {'story_id':'subreddit1_0'}
     
     woby_db = MongoDBInterface(host, port, database, collection, log_file=LOG_FILENAME)
-    woby_db.insert_documents(sample_story)
-    woby_db.delete_documents(delete_query, delete_many=False, delete_all=False)
-    woby_db.get_documents(show=True)
+    # woby_db.insert_documents(sample_story)
+    # woby_db.delete_documents(delete_query, delete_many=False, delete_all=True)
+    
+    query = {}
+    # 1 (for ascending) or -1 (for descending)
+    sort = [('_id', -1)]
+    documents = woby_db.get_documents(sort=sort, limit=1, show=True)
+    try:
+        print(documents[0]['doc_id'])
+    except IndexError:
+        print(f'Empty return {documents}')
 
 if __name__ == "__main__":
     print("Executing test_MongoDBInterface.py")
