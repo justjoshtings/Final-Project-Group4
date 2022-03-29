@@ -43,11 +43,14 @@ def main():
     # 1 (for ascending) or -1 (for descending)
     sort = [('_id', -1)]
     projection = {'selftext':0}
-    documents = woby_db.get_documents(sort=sort, projection=projection, limit=1, show=True)
+    # projection = {}
+    documents = woby_db.get_documents(sort=sort, projection=projection, limit=1, size=True, show=True)
     try:
         print(documents[0]['doc_id'])
     except IndexError:
         print(f'Empty return {documents}')
+    except KeyError:
+        print(documents)
 
 if __name__ == "__main__":
     print("Executing test_MongoDBInterface.py")

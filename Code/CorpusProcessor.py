@@ -28,7 +28,7 @@ class CorpusProcessor:
 		if self.LOG_FILENAME:
             # Set up a specific logger with our desired output level
 			self.mylogger = MyLogger(self.LOG_FILENAME)
-			global MY_LOGGER
+			# global MY_LOGGER
 			self.MY_LOGGER = self.mylogger.get_mylogger()
 			self.MY_LOGGER.info(f"{datetime.now()} -- [CorpusProcessor] Setting corpus filepath to {self.corpus_filepath}...")
 	
@@ -42,21 +42,23 @@ class CorpusProcessor:
 			db (MongoDB database object): default None
 			save_data (Boolean): default save_data = False to not save corpus to disk nor save metada to MongoDB, True to save both
 		'''
-		df = pd.DataFrame()  # initialize dataframe
-		
 		# Get last_id_count from connected DB
 		if not db:
 			self.last_id_count = 1
 		else:
 			sort = [('_id', -1)]
-			documents = db.get_documents(sort=sort, limit=1, show=True)
+			documents = db.get_documents(sort=sort, limit=1, show=False)
 			# If empty, that means its the first entry so set to 1
 			try:
-				self.last_id_count = documents[0]['doc_id']
+				self.last_id_count = documents[0]['doc_id'] + 1
 			except IndexError:
 				self.last_id_count = 1
 
+		if self.LOG_FILENAME:
+			self.MY_LOGGER.info(f"{datetime.now()} -- [CorpusProcessor] Last id count {self.last_id_count}...")
 		
+		df = pd.DataFrame()  # initialize dataframe
+			
 		# loop through each post retrieved from GET request
 		for post in res.json()['data']['children']:
 
@@ -74,9 +76,9 @@ class CorpusProcessor:
 					'subreddit': post['data']['subreddit'],
 					'subreddit_name_prefixed': post['data']['subreddit_name_prefixed'],
 					'title': post['data']['title'],
-					'little_taste': text[:100],
+					'little_taste': text[:150],
 					'selftext': post['data']['selftext'],
-					'author_fullname': post['data']['author_fullname'],
+					# 'author_fullname': post['data']['author_fullname'],
 					'author': post['data']['author'],
 					'upvote_ratio': post['data']['upvote_ratio'],
 					'ups': post['data']['ups'],
@@ -89,7 +91,8 @@ class CorpusProcessor:
 					'num_bytes': getsizeof(text),
 					'created_utc': post['data']['created_utc'],
 					'created_human_readable': datetime.utcfromtimestamp(post['data']['created_utc'],).strftime('%Y-%m-%dT%H:%M:%SZ'),
-					'filepath':corpus_savepath+f'/{doc_id}_{full_name}.txt'
+					'filepath':corpus_savepath+f'/{doc_id}_{full_name}.txt',
+					'train_test':''
 				}
 				
 				# append relevant data to dataframe
@@ -102,13 +105,107 @@ class CorpusProcessor:
 					try:
 						with open(corpus_savepath+f'/{doc_id}_{full_name}.txt', 'w', encoding='utf-8') as f:
 							f.write(text)
+						if self.LOG_FILENAME:
+							self.MY_LOGGER.info(f"{datetime.now()} -- [CorpusProcessor] Saved data to {doc_id}_{full_name}...")
 					except FileNotFoundError:
-						print(
-							f'[FileNotFoundError] Error saving, skipping {doc_id}_{full_name}')
+						print(f'[FileNotFoundError] Error saving, skipping {doc_id}_{full_name}')
+						if self.LOG_FILENAME:
+							self.MY_LOGGER.info(f"{datetime.now()} -- [CorpusProcessor] [FileNotFoundError] Error saving, skipping {doc_id}_{full_name}...")
 
 					db.insert_documents(data_dict)
 
 				self.last_id_count += 1
+		
+		if self.LOG_FILENAME:
+			self.MY_LOGGER.info(f"{datetime.now()} -- [CorpusProcessor] Parsed json response...")
+	
+	def psaw_parse_response(self, res, db=None, save_data=False):
+		'''
+		Method to save posts to disk and push metadata to MongoDB from the PSAW (pushshift) response
+
+		Params:
+			self: instance of object
+			res (REQUEST response object): request response object to parse
+			db (MongoDB database object): default None
+			save_data (Boolean): default save_data = False to not save corpus to disk nor save metada to MongoDB, True to save both
+		'''
+		# Get last_id_count from connected DB
+		if not db:
+			self.last_id_count = 1
+		else:
+			sort = [('_id', -1)]
+			documents = db.get_documents(sort=sort, limit=1, show=False)
+			# If empty, that means its the first entry so set to 1
+			try:
+				self.last_id_count = documents[0]['doc_id'] + 1
+			except IndexError:
+				self.last_id_count = 1
+
+		if self.LOG_FILENAME:
+			self.MY_LOGGER.info(f"{datetime.now()} -- [CorpusProcessor] Last id count {self.last_id_count}...")
+		
+		df = pd.DataFrame()  # initialize dataframe
+
+		post = res[-1]
+
+		# If not video (False) and is not link (True)
+		if not post['is_video'] and post['is_self']:
+
+			text = post['selftext']
+			full_name = 't3_'+post['id']
+			doc_id = self.last_id_count
+			corpus_savepath = self.corpus_filepath+post['subreddit']
+			try:
+				upvote_ratio = post['upvote_ratio']
+			except KeyError:
+				upvote_ratio = -1
+
+			data_dict = {
+				'doc_id': doc_id,
+				'full_name': full_name,
+				'subreddit': post['subreddit'],
+				# 'subreddit_name_prefixed': post['subreddit_name_prefixed'],
+				'title': post['title'],
+				'little_taste': text[:150],
+				'selftext': post['selftext'],
+				# 'author_fullname': post['author_fullname'],
+				'author': post['author'],
+				'upvote_ratio': upvote_ratio,
+				# 'ups': post['ups'],
+				# 'downs': post['downs'],
+				'score': post['score'],
+				'num_comments': post['num_comments'],
+				'permalink': post['permalink'],
+				# 'kind': post['kind'],
+				'num_characters': len(text),
+				'num_bytes': getsizeof(text),
+				'created_utc': post['created_utc'],
+				'created_human_readable': datetime.utcfromtimestamp(post['created_utc'],).strftime('%Y-%m-%dT%H:%M:%SZ'),
+				'filepath':corpus_savepath+f'/{doc_id}_{full_name}.txt',
+				'train_test':'',
+				'api_type':'psaw'
+			}
+
+			if save_data:
+				if not os.path.exists(corpus_savepath):
+					os.makedirs(corpus_savepath)
+
+				try:
+					with open(corpus_savepath+f'/{doc_id}_{full_name}.txt', 'w', encoding='utf-8') as f:
+						f.write(text)
+					if self.LOG_FILENAME:
+						self.MY_LOGGER.info(f"{datetime.now()} -- [CorpusProcessor] Saved data to {doc_id}_{full_name}...")
+				except FileNotFoundError:
+					print(f'[FileNotFoundError] Error saving, skipping {doc_id}_{full_name}')
+					if self.LOG_FILENAME:
+						self.MY_LOGGER.info(f"{datetime.now()} -- [CorpusProcessor] [FileNotFoundError] Error saving, skipping {doc_id}_{full_name}...")
+
+				db.insert_documents(data_dict)
+
+		if self.LOG_FILENAME:
+			self.MY_LOGGER.info(f"{datetime.now()} -- [CorpusProcessor] Parsed json response...")
+
+
         
 if __name__ == "__main__":
     print("Executing CorpusProcessor.py")

@@ -6,6 +6,7 @@ author: @justjoshtings
 created: 3/27/2022
 """
 from pymongo import MongoClient
+import bson
 from Logger import MyLogger
 from datetime import datetime
 
@@ -33,7 +34,7 @@ class MongoDBInterface:
         if self.LOG_FILENAME:
             # Set up a specific logger with our desired output level
             self.mylogger = MyLogger(self.LOG_FILENAME)
-            global MY_LOGGER
+            # global MY_LOGGER
             self.MY_LOGGER = self.mylogger.get_mylogger()
             self.MY_LOGGER.info(f"{datetime.now()} -- [MONGODB STARTING] Connecting to DB on HOST:{self.host}, PORT:{self.port}, DB:{self.database}, COLLECTION:{self.collection}...")
     
@@ -59,7 +60,7 @@ class MongoDBInterface:
         if self.LOG_FILENAME:
             self.MY_LOGGER.info(f"{datetime.now()} -- [MONGODB INSERT] Insertion complete...")
 
-    def get_documents(self, query={}, projection={}, sort=[], limit=1, show=False):
+    def get_documents(self, query={}, projection={}, sort=[], limit=1, size=False, show=False):
         '''
         Method to retrieve documents from specified collection
 
@@ -69,6 +70,7 @@ class MongoDBInterface:
             projection (dict): default None if no projection, {'aws_account_id': 1}
             sort (list of tuple): default None if not sorting, sort=[( '_id', pymongo.DESCENDING )]
             limit (int): default == 1 to find_one(), else find().limit(limit)
+            size (Boolean): default = False to not show bson MB size, True to show instead of returning documents, max is 16MB
             show (Boolean): default False to not print out retrieved documents, True to print
         
         Returns:
@@ -79,8 +81,11 @@ class MongoDBInterface:
         returned_documents = self.collection.find(query, projection=projection, sort=sort).limit(limit)
 
         for document in returned_documents:
+            
             if show:
                 print(document)
+                if size:
+                    print(self.get_document_size(document))
         
             documents.append(document)
         
@@ -112,6 +117,16 @@ class MongoDBInterface:
 
         if self.LOG_FILENAME:
             self.MY_LOGGER.info(f"{datetime.now()} -- [MONGODB DELETE] Completed deletion...")
+
+    def get_document_size(self, doc):
+        '''
+        Method to get bson document size, max is 16MB
+        
+        Params:
+            doc (bson document): document to get size of
+        '''
+        return len(bson.BSON.encode(doc))
+
 
 if __name__ == "__main__":
     print("Executing MongoDBInterface.py")
