@@ -16,6 +16,7 @@ from datetime import datetime
 import os
 import pandas as pd
 from sys import getsizeof
+import psaw
 
 
 class RedditAPI:
@@ -49,7 +50,7 @@ class RedditAPI:
 		if self.LOG_FILENAME:
             # Set up a specific logger with our desired output level
 			self.mylogger = MyLogger(self.LOG_FILENAME)
-			global MY_LOGGER
+			# global MY_LOGGER
 			self.MY_LOGGER = self.mylogger.get_mylogger()
 			self.MY_LOGGER.info(f"{datetime.now()} -- [FILE SETUP] f'Changing current directory to {self.cwd}...")
 	
@@ -109,13 +110,69 @@ class RedditAPI:
 		'''
 		self.handshake()
 
-		# make a request for the trending posts in /r/Python
-		self.res = requests.get(f"https://oauth.reddit.com/r/{subreddit}/{sort_type}",
-						headers=self.headers, params={'limit': str(limit), 't': f'{time_type}'})
+		# To handle limit of 100 when we want to get more posts than 100
+		runs_limit_100 = limit // 100
+		last_run_limit = limit % 100
 
-		df = pd.DataFrame()  # initialize dataframe
+		if last_run_limit:
+			total_calls = runs_limit_100+1
+		else:
+			total_calls = runs_limit_100
 
-		return self.res
+		self.params = {'limit': str(limit), 't': f'{time_type}'}
+
+		for i in range(total_calls):
+			if i < runs_limit_100: 
+				limit = 100
+			else:
+				limit = last_run_limit
+
+			self.params['limit'] = str(limit)
+
+			# make a request for the trending posts in /r/Python
+			self.res = requests.get(f"https://oauth.reddit.com/r/{subreddit}/{sort_type}",
+							headers=self.headers, params=self.params)
+
+			if self.LOG_FILENAME:
+				self.MY_LOGGER.info(f"{datetime.now()} -- [Requesting] https://oauth.reddit.com/r/{subreddit}/{sort_type}...")
+			
+			try:
+				full_name = self.res.json()['data']['children'][-1]['kind']+'_'+self.res.json()['data']['children'][-1]['data']['id']
+			except IndexError:
+				print(self.res.json())
+				print(f"[Requesting Error] End of posts! {IndexError}")
+				if self.LOG_FILENAME:
+					self.MY_LOGGER.info(f"{datetime.now()} -- [Requesting Error] End of posts! {IndexError}")
+				
+				break
+			
+			yield self.res
+			
+			# add/update fullname in params
+			self.params['after'] = full_name
+
+
+	def psaw_query(self, subreddit, sort_type='created_utc', sort='desc', limit=25, metadata='false', is_video=False):
+		'''
+		Reddit Dev API has a submissions limit pull of 1000, we can use PushShift service to get more posts.
+		https://github.com/pushshift/api
+
+		Params:
+			self: instance of object
+			subreddit (str): subreddit to pull data from
+			sort_type (str): sort submissions by ("score", "num_comments", "created_utc"), default = 'created_utc'
+			sort (str): sort type ("asc", "desc"), default = 'desc'
+			metadata (str): display metadata about the query, ["true", "false"], default = 'false'
+			limit (int): how many posts to pull each GET, default=25
+		'''
+		api = psaw.PushshiftAPI()
+
+		print(f"[Requesting] subreddit:{subreddit}, sort_type:{sort_type}, sort:{sort}, limit:{limit}, metadata:{metadata}, is_video:{is_video}")
+		if self.LOG_FILENAME:
+			self.MY_LOGGER.info(f"{datetime.now()} -- [Requesting] subreddit:{subreddit}, sort_type:{sort_type}, sort:{sort}, limit:{limit}, metadata:{metadata}, is_video:{is_video}")
+		
+		for response in api.search_submissions(subreddit="DarkTales", sort_type=sort_type, sort=sort, limit=limit, is_video=is_video):
+			yield response
 
 
 if __name__ == "__main__":
