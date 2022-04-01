@@ -30,7 +30,7 @@ Data Acquisition from posts of different sub-reddits were done with two primary 
 
 The **Reddit Dev API** has a limit of 1000 Reddit post submissions it can GET. **PSAW** theorectically has all historical post submissions but it has issues where some shards may be out of service and therefore not all post submissions can be retrieved. I used a combination of both services then removed duplciates in order to get the largest corpus possible. 
 
-The **Reddit Dev API** and **PSAW** returned a total of 21,178 posts from the subreddits. This final number becomes 13,121 after removing duplicated stories.
+The **Reddit Dev API** and **PSAW** returned a total of 19,727 posts from the subreddits. This final number becomes 13,120 after removing duplicated stories and 137MBs.
 
 For each post retrieved, the JSON response was parsed for metadata which was inserted into a MongoDB database while a copy of the submission text was saved into the **corpus** directory organized by sub-reddit with a [doc_id]_[t3]_[reddit_post_id].txt schema.
 
@@ -65,7 +65,10 @@ data_dict = {
 #### Corpus directory setup
 ```
 FINAL-PROJECT-GROUP4
-│    Code
+│─── Code
+|─── Corpus
+|─── Woby_Log
+|─── ...
 │
 └─── Corpus
 │    │
@@ -87,4 +90,4 @@ FINAL-PROJECT-GROUP4
 
 #### More on Data Acquisition:
 * [Python Reddit API Wrapper (PRAW)](https://praw.readthedocs.io/en/stable/) can also be used in place of the **Reddit Dev API** to abstract away the requests code.
-* [How to Use Reddit API in Python]https://towardsdatascience.com/how-to-use-the-reddit-api-in-python-5e05ddfd1e5c
+* [How to Use Reddit API in Python](https://towardsdatascience.com/how-to-use-the-reddit-api-in-python-5e05ddfd1e5c)

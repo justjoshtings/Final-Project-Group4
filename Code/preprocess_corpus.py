@@ -31,4 +31,9 @@ for doc in documents:
 
 print(int(size)/1e6, 'MBs')
 
+n_stories = 0
+for sub in os.listdir('./corpus/'):
+    n_stories += len(os.listdir(f'./corpus/{sub}'))
+
+print(n_stories)
 
