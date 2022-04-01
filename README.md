@@ -1,5 +1,5 @@
 # Final-Project-Group4
-Faireplace: Human-machine interactive storytelling engine.
+Woby Tales: Human-machine interactive storytelling engine.
 
 # MongoDB
 * [Setup](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/)
