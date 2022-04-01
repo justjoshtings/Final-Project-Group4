@@ -7,7 +7,7 @@ created: 3/27/2022
 """
 from pymongo import MongoClient
 import bson
-from Logger import MyLogger
+from Woby_Modules.Logger import MyLogger
 from datetime import datetime
 
 class MongoDBInterface:
@@ -85,7 +85,7 @@ class MongoDBInterface:
             if show:
                 print(document)
                 if size:
-                    print(self.get_document_size(document))
+                    print('Bytes: ', self.get_document_size(document))
         
             documents.append(document)
         
@@ -123,9 +123,31 @@ class MongoDBInterface:
         Method to get bson document size, max is 16MB
         
         Params:
+            self: instance of object
             doc (bson document): document to get size of
         '''
         return len(bson.BSON.encode(doc))
+
+    def find_duplciates(self, pipeline):
+        '''
+        Method find duplicates based on a pipeline
+        
+        Params:
+            self: instance of object
+            pipeline (list of dictionary): desribe pipeline to query and aggregate data on, 
+                                           pipeline = [
+                                               {"$group":{"_id":"$full_name", "count":{"$sum":1}}}, 
+                                               {"$match": {"_id" :{ "$ne" : 'null' } , "count" : {"$gt": 1} } },
+                                               {"$project": {"full_name" : "$_id", "_id" : 0} }
+                                               ]
+        '''
+        print('Number of ducplicates: ', len(list(self.collection.aggregate(pipeline))))
+
+        return list(self.collection.aggregate(pipeline))
+    
+    
+
+
 
 
 if __name__ == "__main__":

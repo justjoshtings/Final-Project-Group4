@@ -7,7 +7,7 @@ created: 3/27/2022
 """
 import requests
 from Woby_keys.reddit_keys import reddit_credentials
-from Logger import MyLogger
+from Woby_Modules.Logger import MyLogger
 from datetime import datetime
 import os
 import pandas as pd
@@ -17,10 +17,10 @@ from sys import getsizeof
 LOG_FILENAME = './Woby_Log/RedditScrapper.log'
 CORPUS_FILEPATH = './corpus/'
 
-reddit_client_id = personal_use_script
-reddit_secret_token = secret_key
-reddit_username = username
-reddit_password = password
+reddit_client_id = reddit_credentials['personal_use_script']
+reddit_secret_token = reddit_credentials['secret_key']
+reddit_username = reddit_credentials['username']
+reddit_password = reddit_credentials['password']
 
 # note that CLIENT_ID refers to 'personal use script' and SECRET_TOKEN to 'token'
 print("[Connecting to Reddit Dev App]...")

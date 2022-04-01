@@ -5,7 +5,7 @@ Object to handle processing and I/O of downloaded corpus to disk.
 author: @justjoshtings
 created: 3/27/2022
 """
-from Logger import MyLogger
+from Woby_Modules.Logger import MyLogger
 from datetime import datetime
 import os
 import pandas as pd
@@ -204,6 +204,15 @@ class CorpusProcessor:
 
 		if self.LOG_FILENAME:
 			self.MY_LOGGER.info(f"{datetime.now()} -- [CorpusProcessor] Parsed json response...")
+
+	def corpus_size(self):
+		'''
+		Method to get corpus size in bytes
+
+		Params:
+			self: instance of object
+        '''
+		pass
 
 
         
