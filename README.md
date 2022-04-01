@@ -20,6 +20,11 @@ Number | Subreddit | Filters/Flairs Used | Link
 | 9. | r/Glitch_in_the_Matrix | N/A| [Link](https://www.reddit.com/r/Glitch_in_the_Matrix/) | 
 | 10. | r/Paranormal | N/A| [Link](https://www.reddit.com/r/Paranormal/) | 
 | 11. | r/Ghoststories | N/A| [Link](https://www.reddit.com/r/Ghoststories/) | 
+| 12. | r/libraryofshadows | N/A| [Link](https://www.reddit.com/r/libraryofshadows/) | 
+| 13. | r/UnresolvedMysteries | N/A| [Link](https://www.reddit.com/r/UnresolvedMysteries/) | 
+| 14. | r/TheChills | N/A| [Link](https://www.reddit.com/r/TheChills/) | 
+
+See [Data Acquisition section for more details.](https://github.com/justjoshtings/Final-Project-Group4/blob/main/Code/README.md)
 
 # References
 

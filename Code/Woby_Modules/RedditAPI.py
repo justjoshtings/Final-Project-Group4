@@ -11,7 +11,7 @@ Reddit Dev API Documentations:
 """
 import requests
 from Woby_keys.reddit_keys import reddit_credentials
-from Logger import MyLogger
+from Woby_Modules.Logger import MyLogger
 from datetime import datetime
 import os
 import pandas as pd
