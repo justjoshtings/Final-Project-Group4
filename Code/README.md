@@ -1,8 +1,5 @@
 ## To Do
 #### Preprocessing
-* store on google 
-* download from google
-* calc data size of google download
 * Review some data
 * clean data
 * EDA
@@ -66,7 +63,6 @@ data_dict = {
 ```
 FINAL-PROJECT-GROUP4
 │─── Code
-|─── Corpus
 |─── Woby_Log
 |─── ...
 │
@@ -91,3 +87,37 @@ FINAL-PROJECT-GROUP4
 #### More on Data Acquisition:
 * [Python Reddit API Wrapper (PRAW)](https://praw.readthedocs.io/en/stable/) can also be used in place of the **Reddit Dev API** to abstract away the requests code.
 * [How to Use Reddit API in Python](https://towardsdatascience.com/how-to-use-the-reddit-api-in-python-5e05ddfd1e5c)
+
+## Data Distribution and Download
+
+Data can be accessed publicly on [Kaggle](https://www.kaggle.com/datasets/justjoshtings/spooky-reddit-stories). It conists of a **corpus_metadata.csv** and each individual subreddits' stories in .txt format.
+
+Two options to download data:
+
+Option 1: Manual Download
+1. Manually download, unzip, and move all contents to **FINAL-PROJECT-GROUP4/corpus_data/**.
+
+Option 2: Use 
+1. Create a Kaggle account API. See [here](https://github.com/Kaggle/kaggle-api#api-credentials) or [here](https://adityashrm21.github.io/Setting-Up-Kaggle/).
+2. Download the kaggle.json file and save to **~/.kaggle/kaggle.json**
+```
+mv [downloaded kaggle.json path] ~/.kaggle/kaggle.json
+```
+3. Set permissions.
+```
+chmod 600 ~/.kaggle/kaggle.json
+```
+4. Run **kaggle_dataset.py**
+```
+cd /FINAL-PROJECT-GROUP4/Code/
+python3 kaggle_dataset.py
+```
+
+
+
+
+
+```
+cd ~/FINAL-PROJECT-GROUP4/Code
+python3 kaggle_dataset.py
+```
