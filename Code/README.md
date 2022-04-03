@@ -117,9 +117,9 @@ Two options to download data:
 Option 1: Manual Download
 1. Manually download, unzip, and move all contents to **FINAL-PROJECT-GROUP4/corpus_data/**.
 
-Option 2: Use 
+Option 2: Use Kaggle API to download data
 1. Create a Kaggle account API. See [here](https://github.com/Kaggle/kaggle-api#api-credentials) or [here](https://adityashrm21.github.io/Setting-Up-Kaggle/).
-2. Download the kaggle.json file and save to **~/.kaggle/kaggle.json**
+2. Download the kaggle.json file of your API credentials and save to **~/.kaggle/kaggle.json**
 ```
 mv [downloaded kaggle.json path] ~/.kaggle/kaggle.json
 ```
@@ -130,14 +130,5 @@ chmod 600 ~/.kaggle/kaggle.json
 4. Run **kaggle_dataset.py**
 ```
 cd /FINAL-PROJECT-GROUP4/Code/
-python3 kaggle_dataset.py
-```
-
-
-
-
-
-```
-cd ~/FINAL-PROJECT-GROUP4/Code
 python3 kaggle_dataset.py
 ```
