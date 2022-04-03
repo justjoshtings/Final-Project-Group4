@@ -12,10 +12,10 @@ from Woby_Modules.RedditAPI import RedditAPI
 from Woby_Modules.CorpusProcessor import CorpusProcessor
 from Woby_keys.reddit_keys import reddit_credentials
 
-SCRAPPER_LOG = './Woby_Log/ScrapperLog.log'
-CORPUS_FILEPATH = './corpus/'
+SCRAPPER_LOG = '../Woby_Log/ScrapperLog.log'
+CORPUS_FILEPATH = '../corpus/'
 
-os.chdir(os.path.expanduser("~")+'/Final-Project-Group4/')
+# os.chdir(os.path.expanduser("~")+'/Final-Project-Group4/')
 
 host = 'localhost'
 port = 27017
@@ -30,7 +30,7 @@ subreddits = ['nosleep','stayawake','DarkTales','LetsNotMeet',
 def run_dev_api(host, port, database, collection, subreddits):
     sort_type = 'top'
     time_type = 'all'
-    limit = 5000
+    limit = 1
 
     woby_db = MongoDBInterface(host, port, database, collection, log_file=SCRAPPER_LOG)
     reddit_connection = RedditAPI(reddit_credentials, connection_name='WobyBot', log_file=SCRAPPER_LOG)
@@ -38,13 +38,13 @@ def run_dev_api(host, port, database, collection, subreddits):
 
     for subreddit in subreddits:
         for res in reddit_connection.get_posts(subreddit=subreddit, sort_type=sort_type, time_type=time_type, limit=limit):
-            parser.parse_response(res, db=woby_db, save_data=True)
+            parser.parse_response(res, db=woby_db, save_data=False)
 
 def run_psaw(host, port, database, collection, subreddits):
     # https://api.pushshift.io/reddit/search/submission/?subreddit=DarkTales&metadata=true&size=0&after=1483246800
     sort_type = 'score'
     sort = 'desc'
-    limit = 25000
+    limit = 1
 
     woby_db = MongoDBInterface(host, port, database, collection, log_file=SCRAPPER_LOG)
     reddit_connection = RedditAPI(reddit_credentials, connection_name='WobyBot', log_file=SCRAPPER_LOG)
@@ -52,7 +52,7 @@ def run_psaw(host, port, database, collection, subreddits):
 
     for subreddit in subreddits:
         for res in reddit_connection.psaw_query(subreddit=subreddit, sort_type=sort_type, sort=sort, limit=limit, is_video=False):
-            parser.psaw_parse_response(res, db=woby_db, save_data=True)
+            parser.psaw_parse_response(res, db=woby_db, save_data=False)
 
 if __name__ == "__main__":
     print("Executing scrape_reddit.py")

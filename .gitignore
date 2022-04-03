@@ -4,6 +4,9 @@
 /myenv/
 /Woby_Log/
 /corpus/
+/corpus_data/
+/corpus2/
+/.vscode/
 *keys*
 *key*
 *keys*.py

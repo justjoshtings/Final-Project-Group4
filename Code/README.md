@@ -1,19 +1,36 @@
 ## To Do
 #### Preprocessing
-* store on google 
-* download from google
-* calc data size of google download
-* Review some data
-* clean data
-* EDA
+* clean data with regex
+      * remove everything after "Edit:", "TLDR", "TLDR:", "TL;DR:", "EDIT:"
+      * Remove any https: links, [text](links) -> just remove links
+      * '&amp' = &
+      * '&amp;#x200B;'
+      * '***'
+* EDA (LDA, )
+      plots:
+            * stories per subreddit
+            * most common words total + each subreddit
+            * avg number of words per sub
+            * network plot
+            * topics plot
 
 #### Model Pipeline
+* build simple nn in pytorch for next word prediction
 * figure out pipeline for gpt2, gpt neo, bert, custom model
-* What inputs are needed for each model?
+      * What inputs are needed for each model?
+      * tokenizer will need to handle internet speech/emojis
 
 #### Model Training/Finetuning
 
 #### Model Evaluation
+* scores: bleau, rouge, perplexity, meteor, bertscore
+
+
+## Execution
+Options:
+1. Scrape reddit, push to kaggle, pull from kaggle, preprocess, ... [not real option]
+2. Pull from kaggle, preprocess, ...
+3. Load from trained weights, ...
 
 ## Contents
 1. sample_results
@@ -66,7 +83,6 @@ data_dict = {
 ```
 FINAL-PROJECT-GROUP4
 │─── Code
-|─── Corpus
 |─── Woby_Log
 |─── ...
 │
@@ -91,3 +107,28 @@ FINAL-PROJECT-GROUP4
 #### More on Data Acquisition:
 * [Python Reddit API Wrapper (PRAW)](https://praw.readthedocs.io/en/stable/) can also be used in place of the **Reddit Dev API** to abstract away the requests code.
 * [How to Use Reddit API in Python](https://towardsdatascience.com/how-to-use-the-reddit-api-in-python-5e05ddfd1e5c)
+
+## Data Distribution and Download
+
+Data can be accessed publicly on [Kaggle](https://www.kaggle.com/datasets/justjoshtings/spooky-reddit-stories). It conists of a **corpus_metadata.csv** and each individual subreddits' stories in .txt format.
+
+Two options to download data:
+
+Option 1: Manual Download
+1. Manually download, unzip, and move all contents to **FINAL-PROJECT-GROUP4/corpus_data/**.
+
+Option 2: Use Kaggle API to download data
+1. Create a Kaggle account API. See [here](https://github.com/Kaggle/kaggle-api#api-credentials) or [here](https://adityashrm21.github.io/Setting-Up-Kaggle/).
+2. Download the kaggle.json file of your API credentials and save to **~/.kaggle/kaggle.json**
+```
+mv [downloaded kaggle.json path] ~/.kaggle/kaggle.json
+```
+3. Set permissions.
+```
+chmod 600 ~/.kaggle/kaggle.json
+```
+4. Run **kaggle_dataset.py**
+```
+cd /FINAL-PROJECT-GROUP4/Code/
+python3 kaggle_dataset.py
+```

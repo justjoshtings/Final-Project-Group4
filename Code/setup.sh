@@ -29,3 +29,21 @@ sudo systemctl start mongod
 sudo systemctl status mongod
 sudo systemctl enable mongod
 # mongosh
+
+# Set up Kaggle API
+echo "Setup Kaggle API and download kaggle.json"
+
+FILE=~/.kaggle/kaggle.json
+echo "Checking if kaggle.json exists in: $FILE"
+
+if test -f "$FILE"; then
+    echo "$FILE exists."
+    chmod 600 ~/.kaggle/kaggle.json
+
+    echo "Testing kaggle API, running 'kaggle competitions list'"
+    kaggle competitions list
+else 
+    echo "Set up Kaggle API with the following resources and download kaggle.json to ~/.kaggle/kaggle.json"
+    echo "https://adityashrm21.github.io/Setting-Up-Kaggle/"
+    echo "https://github.com/Kaggle/kaggle-api#api-credentials"
+fi

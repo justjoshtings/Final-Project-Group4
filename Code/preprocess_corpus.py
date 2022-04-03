@@ -10,10 +10,8 @@ import os
 from Woby_Modules.MongoDBInterface import MongoDBInterface
 from Woby_Modules.CorpusProcessor import CorpusProcessor
 
-SCRAPPER_LOG = './Woby_Log/ScrapperLog.log'
-CORPUS_FILEPATH = './corpus/'
-
-os.chdir(os.path.expanduser("~")+'/Final-Project-Group4/')
+SCRAPPER_LOG = '../Woby_Log/ScrapperLog.log'
+CORPUS_FILEPATH = '../corpus/'
 
 host = 'localhost'
 port = 27017
@@ -31,9 +29,4 @@ for doc in documents:
 
 print(int(size)/1e6, 'MBs')
 
-n_stories = 0
-for sub in os.listdir('./corpus/'):
-    n_stories += len(os.listdir(f'./corpus/{sub}'))
-
-print(n_stories)
 
