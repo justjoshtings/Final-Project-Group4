@@ -24,7 +24,7 @@ Number | Subreddit | Filters/Flairs Used | Link
 | 13. | r/UnresolvedMysteries | N/A| [Link](https://www.reddit.com/r/UnresolvedMysteries/) | 
 | 14. | r/TheChills | N/A| [Link](https://www.reddit.com/r/TheChills/) | 
 
-See [Data Acquisition section for more details.](https://github.com/justjoshtings/Final-Project-Group4/blob/main/Code/README.md)
+See [Data Acquisition section for more details.](https://github.com/justjoshtings/Final-Project-Group4/blob/main/Code/README.md#data-acquisition)
 
 # References
 

@@ -38,6 +38,7 @@ Options:
 3. Woby_Modules
 4.
 
+# <a name="data-acquisition"></a>
 ## Data Acquisition
 
 Data Acquisition from posts of different sub-reddits were done with two primary services:
@@ -108,16 +109,17 @@ FINAL-PROJECT-GROUP4
 * [Python Reddit API Wrapper (PRAW)](https://praw.readthedocs.io/en/stable/) can also be used in place of the **Reddit Dev API** to abstract away the requests code.
 * [How to Use Reddit API in Python](https://towardsdatascience.com/how-to-use-the-reddit-api-in-python-5e05ddfd1e5c)
 
+# <a name="data-download"></a>
 ## Data Distribution and Download
 
 Data can be accessed publicly on [Kaggle](https://www.kaggle.com/datasets/justjoshtings/spooky-reddit-stories). It conists of a **corpus_metadata.csv** and each individual subreddits' stories in .txt format.
 
-Two options to download data:
+**Two options to download data:**
 
-Option 1: Manual Download
+**Option 1:** Manual Download
 1. Manually download, unzip, and move all contents to **FINAL-PROJECT-GROUP4/corpus_data/**.
 
-Option 2: Use Kaggle API to download data
+**Option 2:** Use Kaggle API to download data
 1. Create a Kaggle account API. See [here](https://github.com/Kaggle/kaggle-api#api-credentials) or [here](https://adityashrm21.github.io/Setting-Up-Kaggle/).
 2. Download the kaggle.json file of your API credentials and save to **~/.kaggle/kaggle.json**
 ```
