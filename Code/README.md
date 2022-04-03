@@ -1,16 +1,36 @@
 ## To Do
 #### Preprocessing
-* Review some data
-* clean data
-* EDA
+* clean data with regex
+      * remove everything after "Edit:", "TLDR", "TLDR:", "TL;DR:", "EDIT:"
+      * Remove any https: links, [text](links) -> just remove links
+      * '&amp' = &
+      * '&amp;#x200B;'
+      * '***'
+* EDA (LDA, )
+      plots:
+            * stories per subreddit
+            * most common words total + each subreddit
+            * avg number of words per sub
+            * network plot
+            * topics plot
 
 #### Model Pipeline
+* build simple nn in pytorch for next word prediction
 * figure out pipeline for gpt2, gpt neo, bert, custom model
-* What inputs are needed for each model?
+      * What inputs are needed for each model?
+      * tokenizer will need to handle internet speech/emojis
 
 #### Model Training/Finetuning
 
 #### Model Evaluation
+* scores: bleau, rouge, perplexity, meteor, bertscore
+
+
+## Execution
+Options:
+1. Scrape reddit, push to kaggle, pull from kaggle, preprocess, ... [not real option]
+2. Pull from kaggle, preprocess, ...
+3. Load from trained weights, ...
 
 ## Contents
 1. sample_results
