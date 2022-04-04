@@ -13,6 +13,7 @@
             * avg number of words per sub
             * network plot
             * topics plot
+* Find more subreddit data
 
 #### Model Pipeline
 * build simple nn in pytorch for next word prediction
@@ -21,6 +22,13 @@
       * tokenizer will need to handle internet speech/emojis
 
 #### Model Training/Finetuning
+1. Basic transformer
+2. GPT-2 (no finetune)
+3. GPT-2 (finetuned)
+4. GPT-NEO (no finetune)
+5. GPT-NEO (finetuned)
+6. BERT (no finetune)
+7. BERT (finetuned)
 
 #### Model Evaluation
 * scores: bleau, rouge, perplexity, meteor, bertscore
@@ -134,3 +142,12 @@ chmod 600 ~/.kaggle/kaggle.json
 cd /FINAL-PROJECT-GROUP4/Code/
 python3 kaggle_dataset.py
 ```
+
+# <a name="data-preprocessing"></a>
+## Data Preprocessing
+
+#### Clean Text
+1. Remove all text after: "Edit:", "TLDR", "TLDR:", "TL;DR:", "EDIT:".
+2. Remove any links and if more than 5 links in text, remove entire document.
+3. Remove '&amp', '&amp;#x200B;'.
+4. Remove '***' or more.
