@@ -37,9 +37,7 @@ class RedditAPI:
 			connection_name (str): Optional string to pass to name connection, default = 'MyBot'
 			log_file (str): default is None to not have logging, otherwise, specify logging path ../filepath/log.log
 		'''
-		self.cwd = os.path.expanduser("~")+'/Final-Project-Group4/'
-		os.chdir(self.cwd)
-		print(f'Changing current directory to {self.cwd}')
+		self.cwd = os.getcwd()
 		
 		self.reddit_client_id = reddit_credentials['personal_use_script']
 		self.reddit_secret_token = reddit_credentials['secret_key']

@@ -23,6 +23,10 @@ Number | Subreddit | Filters/Flairs Used | Link
 | 12. | r/libraryofshadows | N/A| [Link](https://www.reddit.com/r/libraryofshadows/) | 
 | 13. | r/UnresolvedMysteries | N/A| [Link](https://www.reddit.com/r/UnresolvedMysteries/) | 
 | 14. | r/TheChills | N/A| [Link](https://www.reddit.com/r/TheChills/) | 
+| 15. | r/scaredshitless | N/A| [Link](https://www.reddit.com/r/scaredshitless/) | 
+| 16. | r/scaryshortstories | N/A| [Link](https://www.reddit.com/r/scaryshortstories/) | 
+| 17. | r/Humanoidencounters | N/A| [Link](https://www.reddit.com/r/Humanoidencounters/) | 
+| 18. | r/DispatchingStories | N/A| [Link](https://www.reddit.com/r/DispatchingStories/) | 
 
 See [Data Acquisition section for more details.](https://github.com/justjoshtings/Final-Project-Group4/blob/main/Code/README.md#data-acquisition)
 

@@ -10,6 +10,7 @@ from datetime import datetime
 import os
 import pandas as pd
 from sys import getsizeof
+import re
 
 class CorpusProcessor:
 	'''
@@ -211,8 +212,101 @@ class CorpusProcessor:
 
 		Params:
 			self: instance of object
+
+		Return:
+			total_size (float): size of folder data in bytes
         '''
-		pass
+		total_size = 0
+		for dirpath, dirnames, filenames in os.walk(self.corpus_filepath):
+			for f in filenames:
+				fp = os.path.join(dirpath, f)
+				# skip if it is symbolic link
+				if not os.path.islink(fp):
+					total_size += os.path.getsize(fp)
+
+		return total_size
+
+	def clean_corpus(self):
+		'''
+		Method to clean corpus
+
+		Params:
+			self: instance of object
+		
+		1. Remove all text after: "TLDR", "TLDR:", "TL;DR:", "TL DR:", "TL DR".
+		2. Remove any links.
+		3. Remove '&amp', '&amp;#x200B;'.
+		4. Remove '***' or more.
+		'''
+		# Remove TLDRs & '***'& '&amp', '&amp;#x200B;' & urls
+		for dirpath, dirnames, filenames in os.walk(self.corpus_filepath):
+			for file in filenames:
+				if file.endswith('.txt'):
+					with open(dirpath+'/'+file,'r+') as f:
+						text = f.read()
+					
+					sub_pattern = ' '
+					
+					pattern = rf'(TLDR|TLDR:|TL;DR:|TL;DR|TL DR:|TL DR).*'
+					text = self.regex_sub(pattern, sub_pattern, text)
+					self.regex_index(pattern, text)
+
+					pattern2 = rf'\*\*\*+'
+					text = self.regex_sub(pattern2, sub_pattern, text)
+					self.regex_index(pattern2, text)
+
+					pattern3 = rf'(https?://[^\s]+)'
+					text = self.regex_sub(pattern3, sub_pattern, text)
+					self.regex_index(pattern3, text)
+
+					pattern4 = rf'&amp[.;#a-zA-Z0-9;]*\b'
+					text = self.regex_sub(pattern4, sub_pattern, text)
+					self.regex_index(pattern4, text)
+					
+					with open(dirpath+'/'+file,'w') as f:
+						f.write(text)
+
+	def EDA(self):
+		'''
+		Method to do some EDA
+
+		Params:
+			self: instance of object
+		'''
+
+	def regex_sub(self, pattern, sub_pattern=' ', text:str=''):
+		'''
+		Method sub with regex
+
+		Params:
+			self: instance of object
+			pattern (regex pattern, raw string): pattern to look for
+			sub_pattern (str): text to replace pattern with
+			text (str): text to search
+		'''
+		pattern = re.compile(pattern)
+		matches = pattern.sub(sub_pattern, text)
+		# print(matches)
+		# matches is a str
+		return matches
+
+	def regex_index(self, pattern, text:str):
+		'''
+		Method search with regex
+
+		Params:
+			self: instance of object
+			pattern (regex pattern, raw string): pattern to look for
+			text (str): text to search
+		'''
+		pattern = re.compile(pattern)
+		matches = pattern.finditer(text)
+		for match in matches:
+			print(match)
+			print(match.group(0))
+		return 
+
+
 
 
         
