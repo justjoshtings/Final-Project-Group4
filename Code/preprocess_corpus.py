@@ -16,6 +16,9 @@ parser = CorpusProcessor(CORPUS_FILEPATH, log_file=SCRAPPER_LOG)
 
 print('Corpus size: ', parser.corpus_size()/1e6, 'MB')
 
-# parser.clean_corpus()
+parser.clean_corpus()
+parser.EDA()
+
+
 
 

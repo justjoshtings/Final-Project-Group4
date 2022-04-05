@@ -11,6 +11,8 @@ import os
 import pandas as pd
 from sys import getsizeof
 import re
+import matplotlib.pyplot as plt
+import numpy as np
 
 class CorpusProcessor:
 	'''
@@ -272,7 +274,58 @@ class CorpusProcessor:
 
 		Params:
 			self: instance of object
+
+		1. stories per subreddit
+        2. mean number of words per sub
+    	3. most common words total + by each subreddit
+        4. LDA
+			- network plot
+			- topics plot
 		'''
+		results_path = './results/'
+
+		if not os.path.exists(results_path):
+			os.mkdir(results_path)
+
+		# Number of stories per subreddit & number of words per subreddit
+		sub_n_stories = dict()
+		sub_n_words = dict()
+		for dirpath, dirnames, filenames in os.walk(self.corpus_filepath):
+			sub_n_stories[dirpath.split('/')[-1]] = len(filenames)
+			n_words = 0
+			for file in filenames:
+				with open(dirpath+'/'+file, 'r') as f:
+					text = f.read()
+				words = text.split(' ')
+				n_words += len(words)
+			sub_n_words[dirpath.split('/')[-1]] = n_words/len(filenames)
+				
+		sub_n_stories.pop('')
+		sub_n_words.pop('')
+
+		subs = np.array(list(sub_n_stories.keys()))
+		n_stories = np.array(list(sub_n_stories.values()))
+		avg_n_words = np.array(list(sub_n_words.values()))
+		
+		# Number of stories per subreddit
+		plt.rcParams["figure.figsize"] = (18,6)
+		plt.bar(subs, n_stories, color='cadetblue')
+		plt.title('Number of Stories per SubReddit', fontsize=20)
+		plt.xlabel('SubReddit', fontsize=8)
+		plt.ylabel('Number of Stories', fontsize=8)
+		plt.xticks(rotation='70', fontsize=10)
+		plt.savefig(results_path+'n_stories_per_sub.png', bbox_inches='tight')
+
+		# Avg number of words per subreddit
+		plt.rcParams["figure.figsize"] = (18,6)
+		plt.bar(subs, avg_n_words, color='cadetblue')
+		plt.title('Mean Number of Words per SubReddit', fontsize=20)
+		plt.xlabel('SubReddit', fontsize=8)
+		plt.ylabel('Mean Number of Words', fontsize=8)
+		plt.xticks(rotation='70', fontsize=10)
+		plt.savefig(results_path+'mean_words_per_sub.png', bbox_inches='tight')
+
+
 
 	def regex_sub(self, pattern, sub_pattern=' ', text:str=''):
 		'''
