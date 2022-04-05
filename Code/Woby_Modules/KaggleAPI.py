@@ -112,6 +112,21 @@ class KaggleAPI:
 
         if self.LOG_FILENAME:
             self.MY_LOGGER.info(f"{datetime.now()} -- [KaggleAPI] Returned results: {results}")
+
+    def check_dataset_status(self, owner, data_url_end_point):
+        '''
+        Execute bash command line prompts
+
+        Params:
+            self: instance of object
+            owner (str): kaggle owner of dataset
+            data_url_end_point (str): url endpoint for your dataset on kaggle
+        '''
+        command = f'kaggle datasets status {owner}/{data_url_end_point}'
+
+        # Download dsataset
+        command = command.split()
+        self.command_line_execution(command)
         
         
 if __name__ == "__main__":

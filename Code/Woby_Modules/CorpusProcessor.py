@@ -233,30 +233,46 @@ class CorpusProcessor:
 		Params:
 			self: instance of object
 		
-		1. Remove all text after: "TLDR", "TLDR:", "TL;DR:".
-		2. Remove any links and if more than 5 links in text, remove entire document.
+		1. Remove all text after: "TLDR", "TLDR:", "TL;DR:", "TL DR:", "TL DR".
+		2. Remove any links.
 		3. Remove '&amp', '&amp;#x200B;'.
 		4. Remove '***' or more.
 		'''
-		
-		# Remove TLDRs & '***'& '&amp', '&amp;#x200B;'
+		# Remove TLDRs & '***'& '&amp', '&amp;#x200B;' & urls
 		for dirpath, dirnames, filenames in os.walk(self.corpus_filepath):
 			for file in filenames:
 				if file.endswith('.txt'):
 					with open(dirpath+'/'+file,'r+') as f:
 						text = f.read()
-						
-						pattern = rf'(TLDR|TLDR:|TL;DR:).*'
-						sub_pattern = ' '
-						self.regex_sub(pattern, sub_pattern, text)
-						self.regex_index(pattern, text)
+					
+					sub_pattern = ' '
+					
+					pattern = rf'(TLDR|TLDR:|TL;DR:|TL;DR|TL DR:|TL DR).*'
+					text = self.regex_sub(pattern, sub_pattern, text)
+					self.regex_index(pattern, text)
 
-						# pattern2 = rf'\*\*\**'
-						# self.regex_index(pattern2, text)
+					pattern2 = rf'\*\*\*+'
+					text = self.regex_sub(pattern2, sub_pattern, text)
+					self.regex_index(pattern2, text)
 
-		
-		# Remove any links, if more than 5 remove entire document
-		
+					pattern3 = rf'(https?://[^\s]+)'
+					text = self.regex_sub(pattern3, sub_pattern, text)
+					self.regex_index(pattern3, text)
+
+					pattern4 = rf'&amp[.;#a-zA-Z0-9;]*\b'
+					text = self.regex_sub(pattern4, sub_pattern, text)
+					self.regex_index(pattern4, text)
+					
+					with open(dirpath+'/'+file,'w') as f:
+						f.write(text)
+
+	def EDA(self):
+		'''
+		Method to do some EDA
+
+		Params:
+			self: instance of object
+		'''
 
 	def regex_sub(self, pattern, sub_pattern=' ', text:str=''):
 		'''

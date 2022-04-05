@@ -21,7 +21,7 @@ def main():
     collection = 'reddit_stories'
     
     woby_db = MongoDBInterface(host, port, database, collection, log_file=LOG_FILENAME)
-    # woby_db.delete_documents(delete_query, delete_many=False, delete_all=True)
+    # woby_db.delete_documents({}, delete_many=False, delete_all=True)
     
     query = {}
     projection = {'selftext':0}
@@ -32,7 +32,7 @@ def main():
     
     documents = woby_db.get_documents(sort=sort, projection=projection, limit=100000, size=False, show=False)
     print('Total Number of Docs in MongoDB: ',len(documents))
-    
+
     def find_and_delete_dups():
         '''
         Find and delete duplicates from MongoDB metadata and corpus .txt files
@@ -57,8 +57,8 @@ def main():
                     #     data = f.read()
                     # print(data)
 
-                    # os.remove(f"../corpus/{documents[i]['subreddit']}/{str(documents[i]['doc_id'])}_{documents[i]['full_name']}.txt")
-                    # woby_db.delete_documents({"doc_id":documents[i]['doc_id']}, delete_many=False, delete_all=False)
+                    os.remove(f"../corpus/{documents[i]['subreddit']}/{str(documents[i]['doc_id'])}_{documents[i]['full_name']}.txt")
+                    woby_db.delete_documents({"doc_id":documents[i]['doc_id']}, delete_many=False, delete_all=False)
 
             count += len(documents)
         
@@ -104,7 +104,7 @@ def main():
         print(f'\n\nSaved corpus_metadata_df to {corpus_metadata_path}')
 
 
-    # find_and_delete_dups()
+    find_and_delete_dups()
     n_stories_saved_csv()
     create_metadata()
 

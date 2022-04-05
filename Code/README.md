@@ -1,19 +1,13 @@
 ## To Do
 #### Preprocessing
-* clean data with regex
-      * remove everything after "Edit:", "TLDR", "TLDR:", "TL;DR:", "EDIT:"
-      * Remove any https: links, [text](links) -> just remove links
-      * '&amp' = &
-      * '&amp;#x200B;'
-      * '***'
 * EDA (LDA, )
       plots:
             * stories per subreddit
-            * most common words total + each subreddit
+            * most common words total + by each subreddit
             * avg number of words per sub
-            * network plot
-            * topics plot
-* Find more subreddit data
+            * LDA
+                  * network plot
+                  * topics plot
 
 #### Model Pipeline
 * build simple nn in pytorch for next word prediction
@@ -56,7 +50,7 @@ Data Acquisition from posts of different sub-reddits were done with two primary 
 
 The **Reddit Dev API** has a limit of 1000 Reddit post submissions it can GET. **PSAW** theorectically has all historical post submissions but it has issues where some shards may be out of service and therefore not all post submissions can be retrieved. I used a combination of both services then removed duplciates in order to get the largest corpus possible. 
 
-The **Reddit Dev API** and **PSAW** returned a total of 19,727 posts from the subreddits. This final number becomes 13,120 after removing duplicated stories and 137MBs.
+The **Reddit Dev API** and **PSAW** returned a total of 23,249 posts from the subreddits. This final number becomes 14,714 after removing duplicated stories and 137MBs.
 
 For each post retrieved, the JSON response was parsed for metadata which was inserted into a MongoDB database while a copy of the submission text was saved into the **corpus** directory organized by sub-reddit with a [doc_id]_[t3]_[reddit_post_id].txt schema.
 
@@ -147,7 +141,7 @@ python3 kaggle_dataset.py
 ## Data Preprocessing
 
 #### Clean Text
-1. Remove all text after: "Edit:", "TLDR", "TLDR:", "TL;DR:", "EDIT:".
-2. Remove any links and if more than 5 links in text, remove entire document.
+1. Remove all text after: "TLDR", "TLDR:", "TL;DR:", "TL DR:", "TL DR".
+2. Remove any links.
 3. Remove '&amp', '&amp;#x200B;'.
 4. Remove '***' or more.
