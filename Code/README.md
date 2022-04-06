@@ -1,13 +1,9 @@
 ## To Do
 #### Preprocessing
-* EDA (LDA, )
-      plots:
-            * stories per subreddit
-            * most common words total + by each subreddit
-            * avg number of words per sub
-            * LDA
-                  * network plot
-                  * topics plot
+
+* LDA
+      * network plot
+      * topics plot
 
 #### Model Pipeline
 * build simple nn in pytorch for next word prediction
