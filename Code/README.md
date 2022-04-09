@@ -1,13 +1,10 @@
 ## To Do
 #### Preprocessing
-* EDA (LDA, )
-      plots:
-            * stories per subreddit
-            * most common words total + by each subreddit
-            * avg number of words per sub
-            * LDA
-                  * network plot
-                  * topics plot
+
+* LDA
+https://www.machinelearningplus.com/nlp/topic-modeling-gensim-python/
+      * network plot
+      * topics plot
 
 #### Model Pipeline
 * build simple nn in pytorch for next word prediction
@@ -16,6 +13,10 @@
       * tokenizer will need to handle internet speech/emojis
 
 #### Model Training/Finetuning
+https://huggingface.co/docs/transformers/training#finetune-in-native-pytorch
+https://huggingface.co/blog/how-to-generate
+https://huggingface.co/docs/transformers/main_classes/model#transformers.generation_utils.GenerationMixin
+
 1. Basic transformer
 2. GPT-2 (no finetune)
 3. GPT-2 (finetuned)

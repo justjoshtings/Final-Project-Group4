@@ -13,6 +13,10 @@ from sys import getsizeof
 import re
 import matplotlib.pyplot as plt
 import numpy as np
+from nltk import word_tokenize
+from nltk import FreqDist
+from nltk.corpus import stopwords
+import string
 
 class CorpusProcessor:
 	'''
@@ -282,6 +286,7 @@ class CorpusProcessor:
 			- network plot
 			- topics plot
 		'''
+		print('Doing EDA, please wait, the tokenization of the corpus takes a few minutes...')
 		results_path = './results/'
 
 		if not os.path.exists(results_path):
@@ -290,18 +295,34 @@ class CorpusProcessor:
 		# Number of stories per subreddit & number of words per subreddit
 		sub_n_stories = dict()
 		sub_n_words = dict()
+		sub_words = dict()
+		all_words = list()
+
+		stop_words = stopwords.words('english')
+		stop_words += string.punctuation
+		stop_words += ['’', '“', '”', "''", '``', "n't", "'s", '--', '–', "'m"]
+
 		for dirpath, dirnames, filenames in os.walk(self.corpus_filepath):
-			sub_n_stories[dirpath.split('/')[-1]] = len(filenames)
-			n_words = 0
+			_n_words = 0
+			_sub_words = list()
+
 			for file in filenames:
 				with open(dirpath+'/'+file, 'r') as f:
-					text = f.read()
-				words = text.split(' ')
-				n_words += len(words)
-			sub_n_words[dirpath.split('/')[-1]] = n_words/len(filenames)
+					_text = f.read()
+
+				_words = word_tokenize(_text)
+				tokens = [token.lower() for token in _words if token.lower() not in stop_words]
+				_n_words += len(_words)
+				all_words += tokens
+				_sub_words += tokens
+			
+			sub_n_stories[dirpath.split('/')[-1]] = len(filenames)
+			sub_n_words[dirpath.split('/')[-1]] = _n_words/len(filenames)
+			sub_words[dirpath.split('/')[-1]] = _sub_words
 				
 		sub_n_stories.pop('')
 		sub_n_words.pop('')
+		sub_words.pop('')
 
 		subs = np.array(list(sub_n_stories.keys()))
 		n_stories = np.array(list(sub_n_stories.values()))
@@ -325,6 +346,27 @@ class CorpusProcessor:
 		plt.xticks(rotation='70', fontsize=10)
 		plt.savefig(results_path+'mean_words_per_sub.png', bbox_inches='tight')
 
+		# Most common non-stopword words
+		fig = plt.figure(figsize = (10,4))
+		plt.gcf().subplots_adjust(bottom=0.15) # to avoid x-ticks cut-off
+		
+		fd = FreqDist(all_words)
+		print('Whole Corpus: ', fd.most_common(10))
+
+		fd.plot(20, cumulative=False)
+		fig.suptitle('Most Frequent Words in Corpus, Non-Stopwords', fontsize=20)
+		fig.savefig(results_path+'freq_dist.png', bbox_inches = "tight")
+
+		for sub in sub_words.keys():
+			fig = plt.figure(figsize = (10,4))
+			plt.gcf().subplots_adjust(bottom=0.15) # to avoid x-ticks cut-off
+			
+			fd = FreqDist(sub_words[sub])
+			print(f'{sub}: ', fd.most_common(10))
+
+			fd.plot(20, cumulative=False)
+			fig.suptitle(f'Most Frequent Words in Sub r/{sub}, Non-Stopwords', fontsize=20)
+			fig.savefig(results_path+f'{sub}_freq_dist.png', bbox_inches = "tight")
 
 
 	def regex_sub(self, pattern, sub_pattern=' ', text:str=''):
