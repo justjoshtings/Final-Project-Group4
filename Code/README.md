@@ -1,29 +1,29 @@
 ## To Do
 #### Preprocessing
-
+* redownload data before running full training:
+      - delete mongo & corpus txt & kaggle
+      - scrape_reddit.py
+      - post_scrape_reddit.py
+      - kaggle_dataset.py
+      - preprocess_corpus.py
 * LDA
-https://www.machinelearningplus.com/nlp/topic-modeling-gensim-python/
+      * https://www.machinelearningplus.com/nlp/topic-modeling-gensim-python/
       * network plot
       * topics plot
-
-#### Model Pipeline
-* build simple nn in pytorch for next word prediction
-* figure out pipeline for gpt2, gpt neo, bert, custom model
-      * What inputs are needed for each model?
-      * tokenizer will need to handle internet speech/emojis
 
 #### Model Training/Finetuning
 https://huggingface.co/docs/transformers/training#finetune-in-native-pytorch
 https://huggingface.co/blog/how-to-generate
 https://huggingface.co/docs/transformers/main_classes/model#transformers.generation_utils.GenerationMixin
+Fine tune GPT2: https://colab.research.google.com/drive/13dZVYEOMhXhkXWfvSMVM1TTtUDrT6Aeh?usp=sharing#scrollTo=gpt6tR83keZD
 
 1. Basic transformer
+      * Transformer for next word prediction
+      * tokenizer will need to handle internet speech/emojis
 2. GPT-2 (no finetune)
 3. GPT-2 (finetuned)
 4. GPT-NEO (no finetune)
 5. GPT-NEO (finetuned)
-6. BERT (no finetune)
-7. BERT (finetuned)
 
 #### Model Evaluation
 * scores: bleau, rouge, perplexity, meteor, bertscore

@@ -7,7 +7,8 @@ created: 4/8/2022
 """
 from Woby_Modules.Logger import MyLogger
 from datetime import datetime
-from torch.utils.data import DataLoader
+import torch
+from torch.utils.data import DataLoader, Dataset
 from transformers import GPT2Tokenizer, GPT2Model
 
 class LanguageModel:
@@ -44,3 +45,35 @@ class LanguageModel_GPT2(LanguageModel):
 			corpus_filepath (str): corpus filepath to save text data to, './corpus/'
 		'''
 		LanguageModel.__init__(self, corpus_filepath, log_file=log_file)
+
+
+class CustomTextDataset(Dataset):
+	def __init__(self, corpus_dirs, tokenizer):
+		self.corpus_dirs = corpus_dirs
+		self.tokenizer = tokenizer
+	
+	def __len__(self):
+		return len(self.corpus_dirs)
+
+class CustomTextDatasetGPT2(CustomTextDataset):
+	def __init__(self, corpus_dirs, tokenizer, gpt2_type="gpt2", return_tensors_type="pt", max_length=768):
+		CustomTextDataset.__init__(self, corpus_dirs, tokenizer)
+
+		self.max_length = max_length
+		self.gpt2_type = gpt2_type
+		self.return_tensors_type = return_tensors_type
+
+	def __getitem__(self, idx):
+		with open(self.corpus_dirs[idx], 'r+') as f:
+			text = f.read()
+
+		encodings_dict = self.tokenizer('<|startoftext|>'+ text + '<|endoftext|>', truncation=True, max_length=self.max_length, padding="max_length")
+		input_ids = torch.tensor(encodings_dict['input_ids'])
+		attn_masks = torch.tensor(encodings_dict['attention_mask'])
+		
+		return input_ids, attn_masks
+
+if __name__ == "__main__":
+    print("Executing LanguageModel.py")
+else:
+    print("Importing LanguageModel")
