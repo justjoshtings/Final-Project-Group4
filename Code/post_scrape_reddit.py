@@ -90,10 +90,12 @@ def main():
         corpus_metadata_df = corpus_metadata_df.sample(frac=1, axis=0, random_state=42).reset_index(drop=True)
         
         num_entries = corpus_metadata_df.shape[0]
-        train_index = int(num_entries*0.8)
+        train_index = int(num_entries*0.84)
+        valid_index = train_index + int((1-train_index)//2)
 
         corpus_metadata_df.loc[:train_index, 'train_test'] = 'train'
-        corpus_metadata_df.loc[train_index:, 'train_test'] = 'test'
+        corpus_metadata_df.loc[train_index:valid_index, 'train_test'] = 'valid'
+        corpus_metadata_df.loc[valid_index:, 'train_test'] = 'test'
 
         # print(corpus_metadata_df.head())
         # print(corpus_metadata_df.tail())
