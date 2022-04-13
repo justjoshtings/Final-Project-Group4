@@ -13,7 +13,7 @@ from sys import getsizeof
 import re
 import matplotlib.pyplot as plt
 import numpy as np
-from nltk import word_tokenize
+from nltk import word_tokenize, sent_tokenize
 from nltk import FreqDist
 from nltk.corpus import stopwords
 import string
@@ -400,11 +400,55 @@ class CorpusProcessor:
 			print(match)
 			print(match.group(0))
 		return 
+	
+	def split_by_sentence(self):
+		'''
+		Method to split corpus by sentences and then save to csv
 
+		Params:
+			self: instance of object
+		'''
+		# Load metadata
+		corpus_metadadata = pd.read_csv(self.corpus_filepath+'corpus_metadata.csv')
+		train_corpus_dirs = corpus_metadadata[corpus_metadadata['train_test'] == 'train']['filepath']
+		valid_corpus_dirs = corpus_metadadata[corpus_metadadata['train_test'] == 'valid']['filepath']
+		test_corpus_dirs = corpus_metadadata[corpus_metadadata['train_test'] == 'test']['filepath']
 
+		train_corpus_dirs = [path.replace('corpus','corpus_data') for path in train_corpus_dirs]
+		valid_corpus_dirs = [path.replace('corpus','corpus_data') for path in valid_corpus_dirs]
+		test_corpus_dirs = [path.replace('corpus','corpus_data') for path in test_corpus_dirs]
 
+		train_sentences = list()
+		valid_sentences = list()
+		test_sentences = list()
+		
+		for train_path in train_corpus_dirs:
+			with open(train_path,'r+') as f:
+				text = f.read()
+				sentences = sent_tokenize(text)
+				train_sentences += sentences
 
-        
+		for valid_path in valid_corpus_dirs:
+			with open(valid_path,'r+') as f:
+				text = f.read()
+				sentences = sent_tokenize(text)
+				valid_sentences += sentences
+
+		for test_path in test_corpus_dirs:
+			with open(test_path,'r+') as f:
+				text = f.read()
+				sentences = sent_tokenize(text)
+				test_sentences += sentences
+
+		train_df = pd.DataFrame(train_sentences)
+		train_df.to_csv(self.corpus_filepath+'train_sentences.csv', index=False)
+
+		valid_df = pd.DataFrame(valid_sentences)
+		valid_df.to_csv(self.corpus_filepath+'valid_sentences.csv', index=False)
+
+		test_df = pd.DataFrame(test_sentences)
+		test_df.to_csv(self.corpus_filepath+'test_sentences.csv', index=False)
+
 if __name__ == "__main__":
     print("Executing CorpusProcessor.py")
 else:
