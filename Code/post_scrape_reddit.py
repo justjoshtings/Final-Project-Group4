@@ -21,7 +21,6 @@ def main():
     collection = 'reddit_stories'
     
     woby_db = MongoDBInterface(host, port, database, collection, log_file=LOG_FILENAME)
-    # woby_db.delete_documents({}, delete_many=False, delete_all=True)
     
     query = {}
     projection = {'selftext':0}
@@ -84,14 +83,16 @@ def main():
         Create metadata file from MongoDB saved data and save as .csv to ./corpus/corpus_metadata.csv
         '''
         projection = {'selftext':0}
+        sort = []
         documents = woby_db.get_documents(sort=sort, projection=projection, limit=100000, size=False, show=False)
+        print('Total Number of Docs in MongoDB: ',len(documents))
 
         corpus_metadata_df = pd.DataFrame(documents)
         corpus_metadata_df = corpus_metadata_df.sample(frac=1, axis=0, random_state=42).reset_index(drop=True)
         
         num_entries = corpus_metadata_df.shape[0]
         train_index = int(num_entries*0.84)
-        valid_index = train_index + int((1-train_index)//2)
+        valid_index = train_index + int((num_entries-train_index)//2)
 
         corpus_metadata_df.loc[:train_index, 'train_test'] = 'train'
         corpus_metadata_df.loc[train_index:valid_index, 'train_test'] = 'valid'

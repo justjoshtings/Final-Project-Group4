@@ -1,32 +1,26 @@
 ## To Do
 #### Preprocessing
-* redownload data before running full training:
-      - delete mongo & corpus txt & kaggle
-      - scrape_reddit.py
-      - post_scrape_reddit.py
-      - kaggle_dataset.py
-      - preprocess_corpus.py
-* LDA
-      * https://www.machinelearningplus.com/nlp/topic-modeling-gensim-python/
-      * network plot
-      * topics plot
+* network plot
 
 #### Model Training/Finetuning
 https://huggingface.co/docs/transformers/training#finetune-in-native-pytorch
 https://huggingface.co/blog/how-to-generate
 https://huggingface.co/docs/transformers/main_classes/model#transformers.generation_utils.GenerationMixin
 Fine tune GPT2: https://colab.research.google.com/drive/13dZVYEOMhXhkXWfvSMVM1TTtUDrT6Aeh?usp=sharing#scrollTo=gpt6tR83keZD
+BART: https://sshleifer.github.io/blog_v2/jupyter/2020/03/12/bart.html
 
-1. Basic transformer
-      * Transformer for next word prediction
-      * tokenizer will need to handle internet speech/emojis
-2. GPT-2 (no finetune)
-3. GPT-2 (finetuned)
-4. GPT-NEO (no finetune)
-5. GPT-NEO (finetuned)
+1. GPT-2 (no finetune)
+2. GPT-2 (finetuned)
+      * join n sentences rolling together: [ x+y for x,y in zip(lst[0::2], lst[1::2]) ]
+3. BART (no finetune)
+4. BART (finetuned)
+5. Where to save and dl model weights
 
 #### Model Evaluation
-* scores: bleau, rouge, perplexity, meteor, bertscore
+* scores: bleau, rouge, perplexity, meteor, bertscore OR just use human evaluation + perplexity
+
+#### User Interface
+* ...
 
 
 ## Execution
@@ -51,7 +45,7 @@ Data Acquisition from posts of different sub-reddits were done with two primary 
 
 The **Reddit Dev API** has a limit of 1000 Reddit post submissions it can GET. **PSAW** theorectically has all historical post submissions but it has issues where some shards may be out of service and therefore not all post submissions can be retrieved. I used a combination of both services then removed duplciates in order to get the largest corpus possible. 
 
-The **Reddit Dev API** and **PSAW** returned a total of 23,249 posts from the subreddits. This final number becomes 14,714 after removing duplicated stories and 137MBs.
+The **Reddit Dev API** and **PSAW** returned a total of 23,350 posts from the subreddits. This final number becomes 14,715 after removing duplicated stories and 137MBs.
 
 For each post retrieved, the JSON response was parsed for metadata which was inserted into a MongoDB database while a copy of the submission text was saved into the **corpus** directory organized by sub-reddit with a [doc_id]_[t3]_[reddit_post_id].txt schema.
 
