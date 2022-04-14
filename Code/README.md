@@ -11,13 +11,12 @@ BART: https://sshleifer.github.io/blog_v2/jupyter/2020/03/12/bart.html
 
 1. GPT-2 (no finetune)
 2. GPT-2 (finetuned)
-      * join n sentences rolling together: [ x+y for x,y in zip(lst[0::2], lst[1::2]) ]
 3. BART (no finetune)
 4. BART (finetuned)
 5. Where to save and dl model weights
 
 #### Model Evaluation
-* scores: bleau, rouge, perplexity, meteor, bertscore OR just use human evaluation + perplexity
+* scores: use human evaluation + perplexity
 
 #### User Interface
 * ...
