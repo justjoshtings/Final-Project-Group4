@@ -14,6 +14,8 @@
 *key*
 *keys*.py
 *keys*.txt
+nohup.out
+*.bin
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

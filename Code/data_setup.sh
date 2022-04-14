@@ -11,9 +11,9 @@
 # echo "[Post scrape data handling]..."
 # python3 post_scrape_reddit.py
 
-# # This is where user would run from
-# echo "[Pushing data to kaggle]..."
-# python3 kaggle_dataset.py
+# This is where user would run from
+echo "[Pushing data to kaggle]..."
+python3 kaggle_dataset.py
 
 echo "[Preprocess text corpus and perform EDA]..."
 python3 preprocess_corpus.py

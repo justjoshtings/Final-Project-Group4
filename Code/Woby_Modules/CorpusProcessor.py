@@ -426,18 +426,80 @@ class CorpusProcessor:
 			with open(train_path,'r+') as f:
 				text = f.read()
 				sentences = sent_tokenize(text)
+				sentences = [' '.join(sentence) for sentence in zip(sentences[0::30], sentences[1::30], 
+																	sentences[2::30], sentences[3::30], 
+																	sentences[4::30], sentences[5::30],
+																	sentences[6::30], sentences[7::30],
+																	sentences[8::30], sentences[9::30],
+																	sentences[10::30], sentences[11::30],
+																	sentences[12::30], sentences[13::30],
+																	sentences[14::30], sentences[15::30],
+																	sentences[16::30], sentences[17::30],
+																	sentences[18::30], sentences[19::30],
+																	sentences[20::30], sentences[21::30],
+																	sentences[22::30], sentences[23::30],
+																	sentences[24::30], sentences[25::30],
+																	sentences[26::30], sentences[27::30],
+																	sentences[28::30], sentences[29::30],
+																	)]
 				train_sentences += sentences
-
+		
+		
+		# from transformers import GPT2Tokenizer, GPT2Model, pipeline, set_seed, GPT2LMHeadModel
+		# self.tokenizer = GPT2Tokenizer.from_pretrained('gpt2', bos_token='<|startoftext|>', eos_token='<|endoftext|>', pad_token='<|pad|>')
+		# sizes = list()
+		# for train in train_sentences:
+		# 	encodings_dict = self.tokenizer('<|startoftext|>'+ train + '<|endoftext|>', truncation=True, max_length=768, padding="max_length")
+		# 	my_size = len([n for n in encodings_dict['input_ids'] if n != 50258])
+		# 	sizes.append(my_size)
+		
+		# print('Mean', sum(sizes) / len(sizes))
+		# print('Max', max(sizes))
+		# print('Min', min(sizes))
+		# print(len([size for size in sizes if size == 768]))
+		
 		for valid_path in valid_corpus_dirs:
 			with open(valid_path,'r+') as f:
 				text = f.read()
 				sentences = sent_tokenize(text)
+				sentences = [' '.join(sentence) for sentence in zip(sentences[0::30], sentences[1::30], 
+																	sentences[2::30], sentences[3::30], 
+																	sentences[4::30], sentences[5::30],
+																	sentences[6::30], sentences[7::30],
+																	sentences[8::30], sentences[9::30],
+																	sentences[10::30], sentences[11::30],
+																	sentences[12::30], sentences[13::30],
+																	sentences[14::30], sentences[15::30],
+																	sentences[16::30], sentences[17::30],
+																	sentences[18::30], sentences[19::30],
+																	sentences[20::30], sentences[21::30],
+																	sentences[22::30], sentences[23::30],
+																	sentences[24::30], sentences[25::30],
+																	sentences[26::30], sentences[27::30],
+																	sentences[28::30], sentences[29::30],
+																	)]
 				valid_sentences += sentences
 
 		for test_path in test_corpus_dirs:
 			with open(test_path,'r+') as f:
 				text = f.read()
 				sentences = sent_tokenize(text)
+				sentences = [' '.join(sentence) for sentence in zip(sentences[0::30], sentences[1::30], 
+																	sentences[2::30], sentences[3::30], 
+																	sentences[4::30], sentences[5::30],
+																	sentences[6::30], sentences[7::30],
+																	sentences[8::30], sentences[9::30],
+																	sentences[10::30], sentences[11::30],
+																	sentences[12::30], sentences[13::30],
+																	sentences[14::30], sentences[15::30],
+																	sentences[16::30], sentences[17::30],
+																	sentences[18::30], sentences[19::30],
+																	sentences[20::30], sentences[21::30],
+																	sentences[22::30], sentences[23::30],
+																	sentences[24::30], sentences[25::30],
+																	sentences[26::30], sentences[27::30],
+																	sentences[28::30], sentences[29::30],
+																	)]
 				test_sentences += sentences
 
 		train_df = pd.DataFrame(train_sentences)
