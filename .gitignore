@@ -16,6 +16,11 @@
 *keys*.txt
 nohup.out
 *.bin
+*ignore*
+gpt2_finetuned
+gpt2_neo_finetuned
+gpt_neo_125M_model_finetuned.zip
+gpt2_model_finetuned.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
