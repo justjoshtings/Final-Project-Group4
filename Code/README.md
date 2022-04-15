@@ -11,15 +11,29 @@ BART: https://sshleifer.github.io/blog_v2/jupyter/2020/03/12/bart.html
 
 1. GPT-2 (no finetune)
 2. GPT-2 (finetuned)
-3. BART (no finetune)
-4. BART (finetuned)
-5. Where to save and dl model weights
+3. GPT-NEO (no finetune)
+4. GPT-NEO (finetuned)
+5. Save model weights:
+      - zip model weights folder
+      - rename original to something that is gitignored; *ignore*
+      - scp zip to local, push to github release
+      - script to download from .zip http and unzips and pushes to results/model_weights/ dir
+      - test weights loading and generation
 
 #### Model Evaluation
 * scores: use human evaluation + perplexity
+      - headers: prompt, rank
+      - rows: prompt text, original, gpt2, gpt2 ft, gptneo, gptneo ft, shelley
+      - google sheet link
+* compare to shelley prompts
 
 #### User Interface
-* ...
+* flask app: a textbox and return block of text and a chatbot
+
+#### Report & Presentation
+* final report word doc
+* presentation
+* github readmes
 
 
 ## Execution

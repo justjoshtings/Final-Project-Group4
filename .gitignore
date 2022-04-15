@@ -16,6 +16,7 @@
 *keys*.txt
 nohup.out
 *.bin
+*ignore*
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -35,17 +35,17 @@ test_metadata = corpus_metadadata[corpus_metadadata['train_test'] == 'test']
 # Train Data
 # train_corpus_dirs = train_metadata['filepath']
 # train_corpus_dirs = [path.replace('corpus','corpus_data') for path in train_corpus_dirs]
-train_sentences = pd.read_csv(CORPUS_FILEPATH+'train_sentences.csv')['0'].values.tolist()[:300]
+train_sentences = pd.read_csv(CORPUS_FILEPATH+'train_sentences.csv')['0'].values.tolist()
 
 # Validation Data
 # valid_corpus_dirs = valid_metadata['filepath']
 # valid_corpus_dirs = [path.replace('corpus','corpus_data') for path in valid_corpus_dirs]
-valid_sentences = pd.read_csv(CORPUS_FILEPATH+'valid_sentences.csv')['0'].values.tolist()[:300]
+valid_sentences = pd.read_csv(CORPUS_FILEPATH+'valid_sentences.csv')['0'].values.tolist()
 
 # Test Data
 # test_corpus_dirs = test_metadata['filepath']
 # test_corpus_dirs = [path.replace('corpus','corpus_data') for path in test_corpus_dirs]
-test_sentences = pd.read_csv(CORPUS_FILEPATH+'test_sentences.csv')['0'].values.tolist()[:300]
+test_sentences = pd.read_csv(CORPUS_FILEPATH+'test_sentences.csv')['0'].values.tolist()
 
 
 '''
@@ -75,8 +75,8 @@ model_gpt2 = LanguageModel_GPT2(corpus_filepath=CORPUS_FILEPATH,
 								log_file=SCRAPPER_LOG)
 
 # model_gpt2.generate_text(text)
-# model_gpt2.train(num_epochs=2, model_weights_dir='./results/model_weights/gpt2/')
-# model_gpt2.get_training_stats(model_weights_dir='./results/model_weights/gpt2/training_stats.csv')
+model_gpt2.train(num_epochs=7, model_weights_dir='./results/model_weights/gpt2_7epochs/')
+model_gpt2.get_training_stats(model_weights_dir='./results/model_weights/gpt2_7epochs/training_stats.csv')
 
 '''
 GPT NEO Model Training
@@ -105,8 +105,8 @@ model_gpt_neo = LanguageModel_GPT_NEO(corpus_filepath=CORPUS_FILEPATH,
 								log_file=SCRAPPER_LOG)
 
 # model_gpt_neo.generate_text(text)
-model_gpt_neo.train(num_epochs=2, model_weights_dir='./results/model_weights/gpt_neo_125M/')
-model_gpt_neo.get_training_stats(model_weights_dir='./results/model_weights/gpt_neo_125M/training_stats.csv')
+model_gpt_neo.train(num_epochs=7, model_weights_dir='./results/model_weights/gpt_neo_125M_7epochs/')
+model_gpt_neo.get_training_stats(model_weights_dir='./results/model_weights/gpt_neo_125M_7epochs/training_stats.csv')
 
 
 # from transformers import GPT2Tokenizer, GPT2Model, pipeline, set_seed, GPT2LMHeadModel
@@ -126,13 +126,3 @@ model_gpt_neo.get_training_stats(model_weights_dir='./results/model_weights/gpt_
 # print('Min', min(sizes))
 # print(len(sizes))
 # print(len([size for size in sizes if size == 768]))
-
-
-# accuracy_metric = load_metric('accuracy')
-# bertscore_metric = load_metric('bertscore')
-# bleu_metric = load_metric('bleu')
-# f1_metric = load_metric('f1')
-# meteor_metric = load_metric('meteor')
-# precision_metric = load_metric('precision')
-# recall_metric = load_metric('recall')
-# rouge_metric = load_metric('rouge')
