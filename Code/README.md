@@ -13,14 +13,14 @@ BART: https://sshleifer.github.io/blog_v2/jupyter/2020/03/12/bart.html
 2. GPT-2 (finetuned)
 3. GPT-NEO (no finetune)
 4. GPT-NEO (finetuned)
-5. Save model weights:
+5. Save model weights: [Friday/Sat]
       - zip model weights folder
       - rename original to something that is gitignored; *ignore*
       - scp zip to local, push to github release
       - script to download from .zip http and unzips and pushes to results/model_weights/ dir
       - test weights loading and generation
 
-#### Model Evaluation
+#### Model Evaluation [Sun/Mon]
 * scores: use human evaluation + perplexity
       - headers: prompt, rank
       - rows: prompt text, original, gpt2, gpt2 ft, gptneo, gptneo ft, shelley
@@ -28,7 +28,7 @@ BART: https://sshleifer.github.io/blog_v2/jupyter/2020/03/12/bart.html
 * compare to shelley prompts
 
 #### User Interface
-* flask app: a textbox and return block of text and a chatbot
+* flask app: a textbox and return block of text and a chatbot [Friday/Sat]
 
 #### Report & Presentation
 * final report word doc

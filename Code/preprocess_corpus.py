@@ -15,8 +15,8 @@ def main():
 
     print('Corpus size: ', parser.corpus_size()/1e6, 'MB')
 
-    # parser.clean_corpus()
-    # parser.EDA()
+    parser.clean_corpus()
+    parser.EDA()
     parser.split_by_sentence()
 
 if __name__ == "__main__":

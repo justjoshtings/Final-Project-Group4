@@ -364,26 +364,22 @@ class LanguageModel_GPT2(LanguageModel):
 		self.model = GPT2LMHeadModel.from_pretrained(self.gpt_model_type)
 
 
-	def load_weights(self):
+	def load_weights(self, model_weights_dir):
 		'''
 		Method to save model weights
 		
 		Params:
 			self: instance of object
+			model_weights_dir (str): model_weights_file
 		
 		Returns:
 			model (torch model): loaded model
 
 		'''
 		# Load a trained model and vocabulary that you have fine-tuned
-		self.model = GPT2LMHeadModel.from_pretrained(self.model_weights_dir)
-		self.tokenizer = GPT2Tokenizer.from_pretrained(self.model_weights_dir)
+		self.model = GPT2LMHeadModel.from_pretrained(model_weights_dir)
+		self.tokenizer = GPT2Tokenizer.from_pretrained(model_weights_dir)
 
-		device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-		print('Using device..', device)
-		self.model.to(device)
-
-		return self.model
 
 class LanguageModel_GPT_NEO(LanguageModel):
 	'''
