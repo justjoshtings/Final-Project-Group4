@@ -1,22 +1,13 @@
-"""
-modeling.py
-Script to perform modeling
-
-author: @justjoshtings
-created: 4/15/2022
-"""
+#import files
+from flask import Flask, render_template, request
+# from waitress import serve
 from Woby_Modules.LanguageModel import LanguageModel_GPT2, LanguageModel_GPT_NEO, CustomTextDatasetGPT2
-from transformers import GPT2Tokenizer
-from torch.utils.data import DataLoader
-import pandas as pd
+from transformers import Conversation, GPT2Tokenizer
 
 SCRAPPER_LOG = '../Woby_Log/ScrapperLog.log'
 CORPUS_FILEPATH = '../corpus_data/'
 
 random_state = 42
-
-with open('../Woby_Log/my_text.txt') as f:
-	text = f.read()
 
 gpt2_tokenizer = GPT2Tokenizer.from_pretrained('gpt2', bos_token='<|startoftext|>', eos_token='<|endoftext|>', pad_token='<|pad|>')
 gpt_neo_tokenizer = GPT2Tokenizer.from_pretrained('EleutherAI/gpt-neo-125M', bos_token='<|startoftext|>', eos_token='<|endoftext|>', pad_token='<|pad|>')
@@ -30,4 +21,30 @@ model_gpt2 = LanguageModel_GPT2(corpus_filepath=CORPUS_FILEPATH,
 								log_file=SCRAPPER_LOG)
 
 model_gpt2.load_weights('./results/model_weights/gpt2_10epochs_finetuned/')
-model_gpt2.generate_text(text)
+
+global chats
+chats = list()
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():    
+    return render_template("home.html") 
+
+@app.route("/get")
+def get_bot_response():    
+    userText = request.args.get('msg')
+    try:
+        bot_Text = str(model_gpt2.generate_text_for_web(chats[-1]+userText))
+    except IndexError:
+        bot_Text = str(model_gpt2.generate_text_for_web(userText))
+    chats.append(userText)
+    chats.append(bot_Text)
+    return bot_Text
+
+if __name__ == "__main__":
+    print('Running Woby App')
+    port = 8080
+    # serve(app, host="0.0.0.0", port=someport, threads=8)
+    app.run(port = port, debug = True, threaded = True)
+

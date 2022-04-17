@@ -75,8 +75,8 @@ model_gpt2 = LanguageModel_GPT2(corpus_filepath=CORPUS_FILEPATH,
 								log_file=SCRAPPER_LOG)
 
 # model_gpt2.generate_text(text)
-model_gpt2.train(num_epochs=10, model_weights_dir='./results/model_weights/gpt2_10epochs/')
-model_gpt2.get_training_stats(model_weights_dir='./results/model_weights/gpt2_10epochs/training_stats.csv')
+model_gpt2.train(num_epochs=30, model_weights_dir='./results/model_weights/gpt2_30epochs/')
+model_gpt2.get_training_stats(model_weights_dir='./results/model_weights/gpt2_30epochs/training_stats.csv')
 
 '''
 GPT NEO Model Training
@@ -105,8 +105,8 @@ model_gpt_neo = LanguageModel_GPT_NEO(corpus_filepath=CORPUS_FILEPATH,
 								log_file=SCRAPPER_LOG)
 
 # model_gpt_neo.generate_text(text)
-model_gpt_neo.train(num_epochs=10, model_weights_dir='./results/model_weights/gpt_neo_125M_10epochs/')
-model_gpt_neo.get_training_stats(model_weights_dir='./results/model_weights/gpt_neo_125M_10epochs/training_stats.csv')
+model_gpt_neo.train(num_epochs=30, model_weights_dir='./results/model_weights/gpt_neo_125M_30epochs/')
+model_gpt_neo.get_training_stats(model_weights_dir='./results/model_weights/gpt_neo_125M_30epochs/training_stats.csv')
 
 
 # from transformers import GPT2Tokenizer, GPT2Model, pipeline, set_seed, GPT2LMHeadModel

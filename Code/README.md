@@ -10,25 +10,24 @@ Fine tune GPT2: https://colab.research.google.com/drive/13dZVYEOMhXhkXWfvSMVM1TT
 BART: https://sshleifer.github.io/blog_v2/jupyter/2020/03/12/bart.html
 
 1. GPT-2 (no finetune)
-2. GPT-2 (finetuned)
+2. GPT-2 (finetuned 10 epochs)
 3. GPT-NEO (no finetune)
-4. GPT-NEO (finetuned)
-5. Save model weights: [Friday/Sat]
-      - zip model weights folder
-      - rename original to something that is gitignored; *ignore*
-      - scp zip to local, push to github release
-      - script to download from .zip http and unzips and pushes to results/model_weights/ dir
-      - test weights loading and generation
+4. GPT-NEO (finetuned 10 epochs)
+5. GPT-NEO (finetuned 30 epochs)
+6. GPT-NEO (finetuned 30 epochs)
 
-#### Model Evaluation [Sun/Mon]
+#### Model Evaluation [Tues/Wed/Thurs]
 * scores: use human evaluation + perplexity
       - headers: prompt, rank
       - rows: prompt text, original, gpt2, gpt2 ft, gptneo, gptneo ft, shelley
       - google sheet link
 * compare to shelley prompts
+* scary prompts, moderately scary prompts, very scary prompts --> 30 prompts for each model
+* script to generate table to allow for evaluation.
 
 #### User Interface
-* flask app: a textbox and return block of text and a chatbot [Friday/Sat]
+* flask app:
+      - edit CSS [Mon/Tues]
 
 #### Report & Presentation
 * final report word doc
