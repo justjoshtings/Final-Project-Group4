@@ -25,9 +25,13 @@ BART: https://sshleifer.github.io/blog_v2/jupyter/2020/03/12/bart.html
 * scary prompts, moderately scary prompts, very scary prompts --> 30 prompts for each model
 * script to generate table to allow for evaluation.
 
-#### User Interface
-* flask app:
-      - edit CSS [Mon/Tues]
+#### Final shell script
+- Download data from kaggle
+- Clean do EDA, preprocess
+- Download pretrained models
+- Load pretrained models
+- Do model evaluation/graphs
+- Start flask app
 
 #### Report & Presentation
 * final report word doc
