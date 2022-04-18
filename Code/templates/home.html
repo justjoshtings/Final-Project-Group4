@@ -3,7 +3,7 @@
     <link
       rel="shortcut icon"
       type="image/x-icon"
-      href="https://user-images.githubusercontent.com/20112458/49326597-773b7280-f57a-11e8-853d-20ed61d18b0d.png"
+      href="https://emojipedia-us.s3.amazonaws.com/source/skype/289/ghost_1f47b.png"
     />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <style>
@@ -11,7 +11,8 @@
         font-family: monospace;
       }
       h1 {
-        background-color: yellow;
+        background-color: orangered;
+        color: black;
         display: inline-block;
         font-size: 3em;
         margin: 0;
@@ -26,13 +27,13 @@
       #chatbox {
         margin-left: auto;
         margin-right: auto;
-        width: 40%;
+        width: 60%;
         margin-top: 60px;
       }
       #userInput {
         margin-left: auto;
         margin-right: auto;
-        width: 40%;
+        width: 60%;
         margin-top: 60px;
       }
       #textInput {
@@ -82,19 +83,24 @@
       .box {
         border: 2px solid black;
       }
+      #footer {
+        display: flex;
+        justify-content: center;
+      }
+      
     </style>
 </head>
 
 <html>
-  <title>Candice</title>
+  <title>woby</title>
   <body>
     <center>
       <h1>
         <img
-          src="https://user-images.githubusercontent.com/20112458/49326597-773b7280-f57a-11e8-853d-20ed61d18b0d.png"
-          alt="CANDICE"
+          src="https://emojipedia-us.s3.amazonaws.com/source/skype/289/ghost_1f47b.png"
+          alt="woby"
           style="width:40px;height:40px;"
-        />Your Personal ChatBot
+        /> Woby's Spooky Tales
       </h1>
     </center>
 <div class="box"></div>
@@ -102,19 +108,26 @@
       <div>
         <div id="chatbox">
           <img
-            src="https://user-images.githubusercontent.com/20112458/49326597-773b7280-f57a-11e8-853d-20ed61d18b0d.png"
-            alt="CANDICE"
+            src="https://emojipedia-us.s3.amazonaws.com/source/skype/289/ghost_1f47b.png"
+            alt="woby"
             style="width:40px;height:40px;"
           />
           <p class="botText">
-            <span>Hi! I'm Candice your personal ChatBot</span>
+            <span >Hi! I'm Woby, let's tell a scary story together. I'll start and you can continue...</span>
           </p>
         </div>
         <div id="userInput">
-          <input id="textInput" type="text" name="msg" placeholder="Message" />
+          <input id="textInput" type="text" name="msg" placeholder="Continue Woby's Story" />
         </div>
       </div>
     </div>
+    <div id="footer">
+      <p class="github">
+        <span >Learn more on</span>
+        <a href="https://github.com/justjoshtings/Final-Project-Group4">GitHub</a>
+      </p>
+    </div>
+
   </body>
   <script>
     function getBotResponse() {
@@ -129,13 +142,18 @@
         var botHtml = '<p class="botText"><span>' + data + "</span></p>";
         $("#chatbox").append(botHtml);
         document
-          .getElementById("userInput")
-          .scrollIntoView({ block: "start", behavior: "smooth" });
+        .getElementById("userInput")
+        .scrollIntoView({ block: "start", behavior: "smooth" });
       });
     }
+    function sendIsTypingToUser(){
+      var isTyping = '<p class="botText_istyping"><span>...</span></p>';
+      $("#chatbox").append(isTyping);
+     }
     $("#textInput").keypress(function(e) {
       if (e.which == 13) {
         getBotResponse();
+        // sendIsTypingToUser();
       }
     });
 </script>
