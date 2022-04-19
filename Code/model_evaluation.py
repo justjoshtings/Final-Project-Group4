@@ -29,5 +29,5 @@ model_gpt2 = LanguageModel_GPT2(corpus_filepath=CORPUS_FILEPATH,
 								gpt_model_type='gpt2',
 								log_file=SCRAPPER_LOG)
 
-model_gpt2.load_weights('./results/model_weights/gpt2_finetuned/')
+model_gpt2.load_weights('./results/model_weights/gpt2_10epochs_finetuned/')
 model_gpt2.generate_text(text)

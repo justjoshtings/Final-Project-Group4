@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<head>
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="https://emojipedia-us.s3.amazonaws.com/source/skype/289/ghost_1f47b.png"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+      body {
+        font-family: monospace;
+      }
+      h1 {
+        background-color: orangered;
+        color: black;
+        display: inline-block;
+        font-size: 3em;
+        margin: 0;
+        padding: 14px;
+      }
+      h3 {
+        color: black;
+        font-size: 20px;
+        margin-top: 3px;
+        text-align: center;
+      }
+      #chatbox {
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        margin-top: 60px;
+      }
+      #userInput {
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        margin-top: 60px;
+      }
+      #textInput {
+        width: 90%;
+        border: none;
+        border-bottom: 3px solid black;
+        font-family: monospace;
+        font-size: 17px;
+      }
+      .userText {
+        color: white;
+        font-family: monospace;
+        font-size: 17px;
+        text-align: right;
+        line-height: 30px;
+      }
+      .userText span {
+        background-color: #808080;
+        padding: 10px;
+        border-radius: 2px;
+      }
+      .botText {
+        color: white;
+        font-family: monospace;
+        font-size: 17px;
+        text-align: left;
+        line-height: 30px;
+      }
+      .botText span {
+        background-color: #4169e1;
+        padding: 10px;
+        border-radius: 2px;
+      }
+      #tidbit {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 300px;
+      }
+      .boxed {
+        margin-left: auto;
+        margin-right: auto;
+        width: 78%;
+        margin-top: 60px;
+        border: 1px solid green;
+      }
+      .box {
+        border: 2px solid black;
+      }
+      #footer {
+        display: flex;
+        justify-content: center;
+      }
+      
+    </style>
+</head>
+
+<html>
+  <title>woby</title>
+  <body>
+    <center>
+      <h1>
+        <img
+          src="https://emojipedia-us.s3.amazonaws.com/source/skype/289/ghost_1f47b.png"
+          alt="woby"
+          style="width:40px;height:40px;"
+        /> Woby's Spooky Tales
+      </h1>
+    </center>
+<div class="box"></div>
+    <div class="boxed">
+      <div>
+        <div id="chatbox">
+          <img
+            src="https://emojipedia-us.s3.amazonaws.com/source/skype/289/ghost_1f47b.png"
+            alt="woby"
+            style="width:40px;height:40px;"
+          />
+          <p class="botText">
+            <span >Hi! I'm Woby, let's tell a scary story together.</span>
+          </p>
+          <p class="botText">
+              <span >Start our story below or just hit enter for me to start us off.</span>
+          </p>
+
+        </div>
+        <div id="userInput">
+          <input id="textInput" type="text" name="msg" placeholder="continue Woby's spooky story here..." />
+        </div>
+      </div>
+    </div>
+    <div id="footer">
+      <p class="github">
+        <span >Learn more about Woby on</span>
+        <a href="https://github.com/justjoshtings/Final-Project-Group4">GitHub</a>
+      </p>
+    </div>
+
+  </body>
+  <script>
+    function getBotResponse() {
+      var rawText = $("#textInput").val();
+      var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
+      $("#textInput").val("");
+      $("#chatbox").append(userHtml);
+      document
+        .getElementById("userInput")
+        .scrollIntoView({ block: "start", behavior: "smooth" });
+      $.get("/get", { msg: rawText }).done(function(data) {
+        var botHtml = '<p class="botText"><span>' + data + "</span></p>";
+        // $("#chatbox").empty();
+        $("#chatbox").append(botHtml);
+        document
+        .getElementById("userInput")
+        .scrollIntoView({ block: "start", behavior: "smooth" });
+      });
+    }
+    function sendIsTypingToUser(){
+      var isTyping = '<p class="botText_istyping"><span>...</span></p>';
+      $("#chatbox").append(isTyping);
+     }
+    $("#textInput").keypress(function(e) {
+      if (e.which == 13) {
+        getBotResponse();
+        // sendIsTypingToUser();
+      }
+    });
+</script>
+</html>

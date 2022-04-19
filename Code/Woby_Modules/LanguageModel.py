@@ -319,6 +319,43 @@ class LanguageModel:
 		for i, encoded_text in enumerate(generated_encoded_texts):
 			print("{}: {}".format(i, self.tokenizer.decode(encoded_text, skip_special_tokens=True)))
 
+	def generate_text_for_web(self, prompt, max_length=500, top_k=50, top_p=0.95, do_sample=True, temperature=0.7, num_return_sequences=1, no_repeat_ngram_size=2, early_stopping=True):
+		'''
+		Function to generate text from given prompt for the web
+
+		Params:
+			self: instance of object
+			prompt (str): string input prompt
+			max_length (int): max length of generated output, default = 150
+			top_k (int): The number of highest probability vocabulary tokens to keep for top-k-filtering, default = 50
+			top_p (float): If set to float < 1, only the most probable tokens with probabilities that add up to top_p or higher are kept for generation, default = 0.95
+			do_sample (Boolean): Whether or not to use sampling ; use greedy decoding otherwise., default = True
+			temperature (float): The value used to module the next token probabilities, default = 0.7
+			num_return_sequences (int): The number of independently computed returned sequences for each element in the batch., default = 1
+			no_repeat_ngram_size (int): If set to int > 0, all ngrams of that size can only occur once., default = 2
+			early_stopping (Boolean):  Whether to stop the beam search when at least num_beams sentences are finished per batch or not, default = True
+		'''
+		length = random.randrange(50, 150)
+
+		try:
+			generated_encoded_texts = self.model.generate(input_ids=self.tokenizer.encode(prompt, return_tensors='pt'), 
+												max_length=max_length, 
+												top_k=50, 
+												top_p=0.95, 
+												do_sample=True, 
+												temperature=0.7, 
+												num_return_sequences=1, 
+												no_repeat_ngram_size=2, 
+												early_stopping=True
+												)
+			text_out = ' '.join(self.tokenizer.decode(generated_encoded_texts[0], skip_special_tokens=True).replace(prompt, '').split()[:length])
+		except RuntimeError:
+			train_sentences = pd.read_csv(self.corpus_filepath+'train_sentences.csv')['0'].values.tolist()
+			sample = random.choice(train_sentences)
+			text_out = ' '.join(sample.split()[:length])
+		
+		return text_out
+
 	def get_training_stats(self, save_weights=True, model_weights_dir='./results/model_weights/training_stats.csv'):
 		'''
 		Method to get trainig stats

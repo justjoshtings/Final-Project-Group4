@@ -10,6 +10,7 @@
 /corpus_original_v2/
 /corpus_original[delete]/
 /.vscode/
+/Code/flask_session/
 *keys*
 *key*
 *keys*.py
@@ -21,6 +22,7 @@ gpt2_finetuned
 gpt2_neo_finetuned
 gpt_neo_125M_model_finetuned.zip
 gpt2_model_finetuned.zip
+*_finetuned
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
