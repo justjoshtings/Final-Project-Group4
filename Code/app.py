@@ -4,6 +4,7 @@ from flask_session import Session
 # from waitress import serve
 from Woby_Modules.LanguageModel import LanguageModel_GPT2, LanguageModel_GPT_NEO, CustomTextDatasetGPT2
 from transformers import Conversation, GPT2Tokenizer
+import pandas as pd
 
 SCRAPPER_LOG = '../Woby_Log/ScrapperLog.log'
 CORPUS_FILEPATH = '../corpus_data/'

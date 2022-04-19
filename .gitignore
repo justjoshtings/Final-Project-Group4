@@ -10,6 +10,7 @@
 /corpus_original_v2/
 /corpus_original[delete]/
 /.vscode/
+/Code/flask_session/
 *keys*
 *key*
 *keys*.py

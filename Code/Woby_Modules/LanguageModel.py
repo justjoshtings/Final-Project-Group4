@@ -337,18 +337,22 @@ class LanguageModel:
 		'''
 		length = random.randrange(50, 150)
 
-		generated_encoded_texts = self.model.generate(input_ids=self.tokenizer.encode(prompt, return_tensors='pt'), 
-											max_length=max_length, 
-											top_k=50, 
-											top_p=0.95, 
-											do_sample=True, 
-											temperature=0.7, 
-											num_return_sequences=1, 
-											no_repeat_ngram_size=2, 
-											early_stopping=True
-											) 
-
-		text_out = ' '.join(self.tokenizer.decode(generated_encoded_texts[0], skip_special_tokens=True).replace(prompt, '').split()[:length])
+		try:
+			generated_encoded_texts = self.model.generate(input_ids=self.tokenizer.encode(prompt, return_tensors='pt'), 
+												max_length=max_length, 
+												top_k=50, 
+												top_p=0.95, 
+												do_sample=True, 
+												temperature=0.7, 
+												num_return_sequences=1, 
+												no_repeat_ngram_size=2, 
+												early_stopping=True
+												)
+			text_out = ' '.join(self.tokenizer.decode(generated_encoded_texts[0], skip_special_tokens=True).replace(prompt, '').split()[:length])
+		except RuntimeError:
+			train_sentences = pd.read_csv(self.corpus_filepath+'train_sentences.csv')['0'].values.tolist()
+			sample = random.choice(train_sentences)
+			text_out = ' '.join(sample.split()[:length])
 		
 		return text_out
 
