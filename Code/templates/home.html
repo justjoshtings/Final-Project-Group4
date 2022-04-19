@@ -113,8 +113,12 @@
             style="width:40px;height:40px;"
           />
           <p class="botText">
-            <span >Hi! I'm Woby, let's tell a scary story together. I'll start and you can continue...</span>
+            <span >Hi! I'm Woby, let's tell a scary story together. I'll start and you can continue.</span>
           </p>
+          <p class="botText">
+              <span >Please hit enter below to start...</span>
+          </p>
+
         </div>
         <div id="userInput">
           <input id="textInput" type="text" name="msg" placeholder="continue Woby's spooky story here..." />
@@ -140,6 +144,7 @@
         .scrollIntoView({ block: "start", behavior: "smooth" });
       $.get("/get", { msg: rawText }).done(function(data) {
         var botHtml = '<p class="botText"><span>' + data + "</span></p>";
+        // $("#chatbox").empty();
         $("#chatbox").append(botHtml);
         document
         .getElementById("userInput")

@@ -13,8 +13,9 @@ BART: https://sshleifer.github.io/blog_v2/jupyter/2020/03/12/bart.html
 2. GPT-2 (finetuned 10 epochs)
 3. GPT-NEO (no finetune)
 4. GPT-NEO (finetuned 10 epochs)
-5. GPT-NEO (finetuned 20 epochs)
-6. GPT-NEO (finetuned 20 epochs)
+5. GPT-NEO (finetuned 25 epochs)
+6. GPT-NEO (finetuned 25 epochs)
+7. my own model pretrained -> pretrainig from github
 
 #### Model Evaluation [Tues/Wed/Thurs]
 * scores: use human evaluation + perplexity
