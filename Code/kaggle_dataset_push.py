@@ -1,6 +1,6 @@
 """
-kaggle_dataset.py
-Script to upload/download Kaggle datasets
+kaggle_dataset_push.py
+Script to upload Kaggle datasets
 
 author: @justjoshtings
 created: 4/1/2022
@@ -33,9 +33,6 @@ def main():
     # Check dataset status
     kaggle.check_dataset_status(owner=kaggle_dataset_owner, data_url_end_point=data_url_end_point)
 
-    # Download dataset
-    kaggle.download_dataset(owner=kaggle_dataset_owner, data_url_end_point=data_url_end_point, path_to_data='../corpus_data')
-
 if __name__ == "__main__":
-    print("Executing kaggle_dataset.py")
+    print("Executing kaggle_dataset_push.py")
     main()

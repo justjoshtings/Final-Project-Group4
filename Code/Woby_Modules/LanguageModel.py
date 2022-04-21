@@ -9,6 +9,9 @@ from operator import index
 from Woby_Modules.Logger import MyLogger
 from transformers import GPT2Tokenizer, GPT2LMHeadModel, pipeline, set_seed, GPTNeoForCausalLM
 from transformers import get_scheduler
+from tokenizers import ByteLevelBPETokenizer
+from tokenizers.implementations import ByteLevelBPETokenizer
+from tokenizers.processors import BertProcessing
 import datasets
 from datasets import load_metric
 import torch, gc
@@ -267,7 +270,7 @@ class LanguageModel:
 			self.MY_LOGGER.info(f"{datetime.now()} -- [LanguageModel] Saving model to {self.model_weights_dir}...")
 		print("Saving model to %s" % self.model_weights_dir)
 		
-		# Save a trained model, configuration and tokenizer using `save_pretrained()`.
+		# Save a trained model, configuration and tokenizer using save_pretrained()`.
 		# They can then be reloaded using `from_pretrained()`
 		model_to_save = self.model.module if hasattr(self.model, 'module') else self.model  # Take care of distributed/parallel training
 		model_to_save.save_pretrained(self.model_weights_dir)
@@ -305,19 +308,24 @@ class LanguageModel:
 			no_repeat_ngram_size (int): If set to int > 0, all ngrams of that size can only occur once., default = 2
 			early_stopping (Boolean):  Whether to stop the beam search when at least num_beams sentences are finished per batch or not, default = True
 		'''
-		generated_encoded_texts = self.model.generate(input_ids=self.tokenizer.encode(prompt, return_tensors='pt'), 
-											max_length=max_length, 
-											top_k=50, 
-											top_p=0.95, 
-											do_sample=True, 
-											temperature=0.7, 
-											num_return_sequences=1, 
-											no_repeat_ngram_size=2, 
-											early_stopping=True
-											) 
+		print(self.tokenizer.encode(prompt, return_tensors='pt').shape)
+		try:
+			generated_encoded_texts = self.model.generate(input_ids=self.tokenizer.encode(prompt, return_tensors='pt'), 
+												max_length=max_length, 
+												top_k=50, 
+												top_p=0.95, 
+												do_sample=True, 
+												temperature=0.7, 
+												num_return_sequences=1, 
+												no_repeat_ngram_size=2, 
+												early_stopping=True
+												)
+
 		print(f"\n\n\nOutput {self.gpt_model_type}:\n" + 100 * '-')
 		for i, encoded_text in enumerate(generated_encoded_texts):
 			print("{}: {}".format(i, self.tokenizer.decode(encoded_text, skip_special_tokens=True)))
+		
+		return self.tokenizer.decode(encoded_text, skip_special_tokens=True)
 
 	def generate_text_for_web(self, prompt, max_length=500, top_k=50, top_p=0.95, do_sample=True, temperature=0.7, num_return_sequences=1, no_repeat_ngram_size=2, early_stopping=True):
 		'''
@@ -350,8 +358,8 @@ class LanguageModel:
 												)
 			text_out = ' '.join(self.tokenizer.decode(generated_encoded_texts[0], skip_special_tokens=True).replace(prompt, '').split()[:length])
 		except RuntimeError:
-			train_sentences = pd.read_csv(self.corpus_filepath+'train_sentences.csv')['0'].values.tolist()
-			sample = random.choice(train_sentences)
+			test_sentences = pd.read_csv(self.corpus_filepath+'test_sentences.csv')['0'].values.tolist()
+			sample = random.choice(test_sentences)
 			text_out = ' '.join(sample.split()[:length])
 		
 		return text_out
@@ -415,7 +423,7 @@ class LanguageModel_GPT2(LanguageModel):
 		'''
 		# Load a trained model and vocabulary that you have fine-tuned
 		self.model = GPT2LMHeadModel.from_pretrained(model_weights_dir)
-		self.tokenizer = GPT2Tokenizer.from_pretrained(model_weights_dir)
+		self.tokenizer = GPT2Tokenizer.from_pretrained(model_weights_dir, bos_token='<|startoftext|>', eos_token='<|endoftext|>', pad_token='<|pad|>')
 
 
 class LanguageModel_GPT_NEO(LanguageModel):
@@ -452,7 +460,50 @@ class LanguageModel_GPT_NEO(LanguageModel):
 		'''
 		# Load a trained model and vocabulary that you have fine-tuned
 		self.model = GPTNeoForCausalLM.from_pretrained(self.model_weights_dir)
-		self.tokenizer = GPT2Tokenizer.from_pretrained(self.model_weights_dir)
+		self.tokenizer = GPT2Tokenizer.from_pretrained(self.model_weights_dir, bos_token='<|startoftext|>', eos_token='<|endoftext|>', pad_token='<|pad|>')
+
+		device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+		print('Using device..', device)
+		self.model.to(device)
+
+		return self.model
+
+class LanguageModel_GPT2Spooky(LanguageModel):
+	'''
+	GPT2Spooky Model
+	'''
+	def __init__(self, corpus_filepath, random_state, train_data_loader, valid_data_loader, test_data_loader, pretrained_model_path='./results/model_weights/gpt2spooky_pretrain/', log_file=None):
+		'''
+		Params:
+			self: instance of object
+			corpus_filepath (str): corpus filepath to save text data to, './corpus/'
+			random_state (int): random seed
+			train_data_loader (torch.utils.data.DataLoader): train data loader
+			valid_data_loader (torch.utils.data.DataLoader): validation data loader
+			test_data_loader (torch.utils.data.DataLoader): test data loader
+			pretrained_model_path (str): path to pretrained model
+			log_file (str): default is None to not have logging, otherwise, specify logging path ../filepath/log.log
+		'''
+		LanguageModel.__init__(self, corpus_filepath, random_state, train_data_loader, valid_data_loader, test_data_loader, log_file=log_file)
+		self.pretrained_model_path = pretrained_model_path
+
+		self.tokenizer = GPT2Tokenizer.from_pretrained(self.pretrained_model_path, bos_token='<|startoftext|>', eos_token='<|endoftext|>', pad_token='<|pad|>')
+		self.model = GPTNeoForCausalLM.from_pretrained(self.pretrained_model_path)
+
+	def load_weights(self):
+		'''
+		Method to save model weights
+		
+		Params:
+			self: instance of object
+		
+		Returns:
+			model (torch model): loaded model
+
+		'''
+		# Load a trained model and vocabulary that you have fine-tuned
+		self.model = GPTNeoForCausalLM.from_pretrained(self.pretrained_model_path, bos_token='<|startoftext|>', eos_token='<|endoftext|>', pad_token='<|pad|>')
+		self.tokenizer = GPT2Tokenizer.from_pretrained(self.pretrained_model_path)
 
 		device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
 		print('Using device..', device)
@@ -524,6 +575,47 @@ class CustomTextDatasetGPT2(CustomTextDataset):
 		attn_masks = torch.tensor(encodings_dict['attention_mask'])
 
 		return input_ids, attn_masks
+
+# class CustomTextDatasetGPT2Spooky(CustomTextDataset):
+# 	'''
+# 	CustomTextDataset object for GPT2Spooky
+# 	'''
+# 	def __init__(self, sentences_list, tokenizer, return_tensors_type="pt", max_length=768):
+# 		'''
+# 		Params:
+# 			self: instance of object
+# 			sentences_list (list of str): list of sentences
+# 			tokenizer (tokenizer object): tokenizer function
+# 			return_tensors_type (str): ['pt', 'tf'], default='pt'
+# 			max_length (int): max length for tokenizer input, gpt2:default=768, gpt_neo: 2048
+# 		'''
+# 		CustomTextDataset.__init__(self, sentences_list, tokenizer)
+
+# 		self.max_length = max_length
+# 		self.return_tensors_type = return_tensors_type
+
+# 	def __getitem__(self, idx):
+# 		'''
+# 		Params:
+# 			self: instance of object
+# 			idx (int): index of iteration
+# 		Returns:
+# 			input_ids (pt tensors): encoded text as tensors
+# 			attn_masks (pt tensors): attention masks as tensors
+# 		'''
+# 		# try:
+# 		# 	with open(self.sentences_list[idx], 'r+') as f:
+# 		# 		text = f.read()
+# 		# except FileNotFoundError:
+# 		# 	with open(self.sentences_list[0], 'r+') as f:
+# 		# 		text = f.read()
+
+# 		text = self.sentences_list[idx]
+# 		encodings_dict = self.tokenizer.encode(text)
+# 		input_ids = torch.tensor(encodings_dict.ids)
+# 		attn_masks = torch.tensor(encodings_dict.attention_mask)
+
+# 		return input_ids,attn_masks
 
 if __name__ == "__main__":
     print("Executing LanguageModel.py")
