@@ -1,3 +1,10 @@
+"""
+test.py
+Script to perform some ad-hoc testing of models, not used for application core
+
+author: @justjoshtings
+created: 4/15/2022
+"""
 from transformers import RobertaTokenizer, RobertaForCausalLM, RobertaConfig, LogitsProcessorList, MinLengthLogitsProcessor, StoppingCriteriaList, MaxLengthCriteria
 import torch
 from tokenizers import ByteLevelBPETokenizer

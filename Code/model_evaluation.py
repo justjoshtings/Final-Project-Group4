@@ -5,7 +5,7 @@ Script to perform modeling
 author: @justjoshtings
 created: 4/15/2022
 """
-from Woby_Modules.LanguageModel import LanguageModel_GPT2, LanguageModel_GPT_NEO, CustomTextDatasetGPT2
+from Woby_Modules.LanguageModel import LanguageModel_GPT2, LanguageModel_GPT_NEO, LanguageModel_GPT2Spooky, CustomTextDatasetGPT2
 from transformers import GPT2Tokenizer
 from torch.utils.data import DataLoader
 import pandas as pd
@@ -27,40 +27,110 @@ Plot trainingcharts
 '''
 # GPT2 25 Epochs
 gpt2_25 = './results/model_weights/gpt2_25epochs/'
-gpt2_25_training_stats = pd.read_csv(gpt2_25+'training_stats.csv', index=False)
+gpt2_25_training_stats = pd.read_csv(gpt2_25+'training_stats.csv')
 
-x = np.linspace(1,gpt2_25_training_stats.shape[0])
+x = np.linspace(1,gpt2_25_training_stats.shape[0],gpt2_25_training_stats.shape[0])
 
 # Loss
 plt.style.use('seaborn-whitegrid')
 plt.rcParams["figure.figsize"] = (18,6)
-plt.plot(x, gpt2_25_training_stats['Training Loss'], color='cadetblue')
-plt.plot(x, gpt2_25_training_stats['Valid. Loss'], color='tomato')
+plt.plot(x, gpt2_25_training_stats['Training Loss'], color='cadetblue', label='Training')
+plt.plot(x, gpt2_25_training_stats['Valid. Loss'], color='tomato', label='Validation')
 plt.title('GPT2 Training and Validation Loss', fontsize=20)
+plt.legend(loc="upper right")
 plt.xlabel('Epochs', fontsize=8)
 plt.ylabel('Cross Entropy Loss', fontsize=8)
 plt.savefig(results_path+'gpt2_25epochs_loss.png', bbox_inches='tight')
+plt.clf()
+plt.close()
 
 # Perplexity
 plt.style.use('seaborn-whitegrid')
 plt.rcParams["figure.figsize"] = (18,6)
-plt.plot(x, gpt2_25_training_stats['Training Perplexity'], color='cadetblue')
-plt.plot(x, gpt2_25_training_stats['Valid. Perplexity'], color='tomato')
+plt.plot(x, gpt2_25_training_stats['Training Perplexity'], color='cadetblue', label='Training')
+plt.plot(x, gpt2_25_training_stats['Valid. Perplexity'], color='tomato', label='Validation')
+plt.yscale('log')
+plt.ylim(0, 10e2)
 plt.title('GPT2 Training and Validation Perplexity', fontsize=20)
+plt.legend(loc="upper right")
 plt.xlabel('Epochs', fontsize=8)
 plt.ylabel('Perplexity', fontsize=8)
 plt.savefig(results_path+'gpt2_25epochs_perplexity.png', bbox_inches='tight')
+plt.clf()
+plt.close()
 
 # GPT-NEO 25 Epochs
+gpt_neo_25 = './results/model_weights/gpt_neo_125M_25epochs/'
+gpt_neo_25_training_stats = pd.read_csv(gpt_neo_25+'training_stats.csv')
 
-# ROBERTA X Epochs
+x = np.linspace(1,gpt_neo_25_training_stats.shape[0],gpt_neo_25_training_stats.shape[0])
+
+# Loss
+plt.style.use('seaborn-whitegrid')
+plt.rcParams["figure.figsize"] = (18,6)
+plt.plot(x, gpt_neo_25_training_stats['Training Loss'], color='cadetblue', label='Training')
+plt.plot(x, gpt_neo_25_training_stats['Valid. Loss'], color='tomato', label='Validation')
+plt.title('GPT2 Training and Validation Loss', fontsize=20)
+plt.legend(loc="upper right")
+plt.xlabel('Epochs', fontsize=8)
+plt.ylabel('Cross Entropy Loss', fontsize=8)
+plt.savefig(results_path+'gpt_neo_25epochs_loss.png', bbox_inches='tight')
+plt.clf()
+plt.close()
+
+# Perplexity
+plt.style.use('seaborn-whitegrid')
+plt.rcParams["figure.figsize"] = (18,6)
+plt.plot(x, gpt_neo_25_training_stats['Training Perplexity'], color='cadetblue', label='Training')
+plt.plot(x, gpt_neo_25_training_stats['Valid. Perplexity'], color='tomato', label='Validation')
+plt.yscale('log')
+plt.ylim(0, 10e2)
+plt.title('GPT2 Training and Validation Perplexity', fontsize=20)
+plt.legend(loc="upper right")
+plt.xlabel('Epochs', fontsize=8)
+plt.ylabel('Perplexity', fontsize=8)
+plt.savefig(results_path+'gpt_neo_25epochs_perplexity.png', bbox_inches='tight')
+plt.clf()
+plt.close()
+
+# gpt2spooky 25 Epochs
+gpt2spooky_25 = './results/model_weights/gpt2spooky_25epochs/'
+gpt2spooky_25_training_stats = pd.read_csv(gpt2spooky_25+'training_stats.csv')
+
+x = np.linspace(1,gpt2spooky_25_training_stats.shape[0],gpt2spooky_25_training_stats.shape[0])
+
+# Loss
+plt.style.use('seaborn-whitegrid')
+plt.rcParams["figure.figsize"] = (18,6)
+plt.plot(x, gpt2spooky_25_training_stats['Training Loss'], color='cadetblue', label='Training')
+plt.plot(x, gpt2spooky_25_training_stats['Valid. Loss'], color='tomato', label='Validation')
+plt.title('GPT2Spooky Training and Validation Loss', fontsize=20)
+plt.legend(loc="upper right")
+plt.xlabel('Epochs', fontsize=8)
+plt.ylabel('Cross Entropy Loss', fontsize=8)
+plt.savefig(results_path+'gpt2spooky_25epochs_loss.png', bbox_inches='tight')
+plt.clf()
+plt.close()
+
+# Perplexity
+plt.style.use('seaborn-whitegrid')
+plt.rcParams["figure.figsize"] = (18,6)
+plt.plot(x, gpt2spooky_25_training_stats['Training Perplexity'], color='cadetblue', label='Training')
+plt.plot(x, gpt2spooky_25_training_stats['Valid. Perplexity'], color='tomato', label='Validation')
+plt.yscale('log')
+plt.title('GPT2Spooky Training and Validation Perplexity', fontsize=20)
+plt.legend(loc="upper right")
+plt.xlabel('Epochs', fontsize=8)
+plt.ylabel('Perplexity', fontsize=8)
+plt.savefig(results_path+'gpt2spooky_25epochs_perplexity.png', bbox_inches='tight')
+plt.clf()
+plt.close()
 
 '''
 Load Models to Evaluate
 '''
 # GPT2 25 Epochs
 gpt2_tokenizer = GPT2Tokenizer.from_pretrained('gpt2', bos_token='<|startoftext|>', eos_token='<|endoftext|>', pad_token='<|pad|>')
-gpt_neo_tokenizer = GPT2Tokenizer.from_pretrained('EleutherAI/gpt-neo-125M', bos_token='<|startoftext|>', eos_token='<|endoftext|>', pad_token='<|pad|>')
 
 model_gpt2 = LanguageModel_GPT2(corpus_filepath=CORPUS_FILEPATH, 
 								random_state=random_state, 
@@ -70,11 +140,33 @@ model_gpt2 = LanguageModel_GPT2(corpus_filepath=CORPUS_FILEPATH,
 								gpt_model_type='gpt2',
 								log_file=SCRAPPER_LOG)
 
-model_gpt2.load_weights('./results/model_weights/gpt2_10epochs_finetuned/')
+model_gpt2.load_weights(gpt2_25)
 
 # GPT-NEO 25 Epochs
+gpt_neo_tokenizer = GPT2Tokenizer.from_pretrained('EleutherAI/gpt-neo-125M', bos_token='<|startoftext|>', eos_token='<|endoftext|>', pad_token='<|pad|>')
 
-# ROBERTA X Epochs
+model_gpt_neo = LanguageModel_GPT_NEO(corpus_filepath=CORPUS_FILEPATH, 
+								random_state=random_state, 
+								train_data_loader=None,
+								valid_data_loader=None,
+								test_data_loader=None,
+								gpt_model_type='EleutherAI/gpt-neo-125M',
+								log_file=SCRAPPER_LOG)
+
+model_gpt_neo.load_weights(gpt_neo_25)
+
+# gpt2spooky 25 Epochs
+gpt2_tokenizer = GPT2Tokenizer.from_pretrained('./results/model_weights/gpt2spooky_pretrain/', bos_token='<|startoftext|>', eos_token='<|endoftext|>', pad_token='<|pad|>')
+
+model_gpt2spooky = LanguageModel_GPT2Spooky(corpus_filepath=CORPUS_FILEPATH, 
+								random_state=random_state, 
+								train_data_loader=None,
+								valid_data_loader=None,
+								test_data_loader=None,
+								gpt_model_type='./results/model_weights/gpt2spooky_pretrain/',
+								log_file=SCRAPPER_LOG)
+
+model_gpt2spooky.load_weights(gpt2spooky_25)
 
 '''
 Generate Text Samples
@@ -84,11 +176,11 @@ test_sentences = pd.read_csv(CORPUS_FILEPATH+'test_sentences.csv')['0'].values.t
 
 prompts = list()
 gpt2_25_generated = list()
-gpt2_neo_generated = list()
-roberta_generated = list()
+gpt_neo_generated = list()
+gpt2spooky_generated = list()
 gpt2_25_rank = list()
-gpt2_neo_rank = list()
-roberta_rank = list()
+gpt_neo_rank = list()
+gpt2spooky_rank = list()
 
 for i in range(50):
 	sample = random.choice(test_sentences)
@@ -96,28 +188,29 @@ for i in range(50):
 	prompts.append(sample_prompt)
 
 	# GPT2 25 Epochs
-	generated_text = model_gpt2.generate_text(sample_prompt)
+	gpt2_generated_text = model_gpt2.generate_text(sample_prompt, max_length=512)
 	
 	# GPT-NEO 25 Epochs
+	gpt_neo_generated_text = model_gpt_neo.generate_text(sample_prompt, max_length=512)
 
-	# ROBERTA Epochs
+	# gpt2spooky Epochs
+	gpt2spooky_generated_text = model_gpt2spooky.generate_text(sample_prompt, max_length=512)
 
-	gpt2_25_generated.append(generated_text)
-	gpt2_neo_generated.append()
-	roberta_generated.append()
+	gpt2_25_generated.append(gpt2_generated_text)
+	gpt_neo_generated.append(gpt_neo_generated_text)
+	gpt2spooky_generated.append(gpt2spooky_generated_text)
 
 	gpt2_25_rank.append(0)
-	gpt2_neo_rank.append(0)
-	roberta_rank.append(0)
+	gpt_neo_rank.append(0)
+	gpt2spooky_rank.append(0)
 	
-
-# Prompt | GPT2 25 Generate | GPT-NEO Generate | ROBERTA Generate | GPT2 25 Rank | GPT-NEO Rank | ROBERTA Rank |
+# Prompt | GPT2 25 Generate | GPT-NEO Generate | gpt2spooky Generate | GPT2 25 Rank | GPT-NEO Rank | gpt2spooky Rank |
 eval_df = pd.DataFrame(prompts, columns=['prompts'])
 eval_df['gpt2_25_generate'] = gpt2_25_generated
-eval_df['gpt_neo_25_generate'] = gpt2_neo_generated
-eval_df['roberta_generate'] = roberta_generated
+eval_df['gpt_neo_25_generate'] = gpt_neo_generated
+eval_df['gpt2spooky_generate'] = gpt2spooky_generated
 eval_df['gpt2_25_rank'] = gpt2_25_rank
-eval_df['gpt_neo_25_rank'] = gpt2_neo_rank
-eval_df['roberta_rank'] = roberta_rank
+eval_df['gpt_neo_25_rank'] = gpt_neo_rank
+eval_df['gpt2spooky_rank'] = gpt2spooky_rank
 
 eval_df.to_csv(results_path+'model_evaluation.csv', index=False)
