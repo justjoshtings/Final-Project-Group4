@@ -39,6 +39,13 @@ Below is the description of each script:
 
 Next, you can either download data from Kaggle manually or setup Kaggle API credentials to download through a prepared script. See [data download](https://github.com/justjoshtings/Final-Project-Group4/blob/main/Code/README.md#data-download) section for more details on both options.
 
+Next, activate virtual environment
+```
+cd ../
+source myenv/bin/activate
+cd ./Code/
+```
+
 Next, run the env_setup.sh script.
 ```
 ./env_setup.sh
@@ -72,6 +79,8 @@ The **Reddit Dev API** has a limit of 1000 Reddit post submissions it can GET. *
 The **Reddit Dev API** and **PSAW** returned a total of 23,350 posts from the subreddits. This final number becomes 14,715 after removing duplicated stories and 137MBs.
 
 For each post retrieved, the JSON response was parsed for metadata which was inserted into a MongoDB database while a copy of the submission text was saved into the **corpus** directory organized by sub-reddit with a [doc_id]_[t3]_[reddit_post_id].txt schema.
+
+[MongoDB Setup](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/)
 
 #### MongoDB stories' metadata sample schema
 
