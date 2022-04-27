@@ -180,5 +180,8 @@ chmod 600 ~/.kaggle/kaggle.json
 
 #### TO DO
 * Final test of running from new ec2 [Wed]
+      - test manual
+      - test kaggle
 * Final report [Thurs/Fri/Sat]
 * Presentation [Sat/Sun/Mon]
+* test on micro instance
