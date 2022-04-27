@@ -1,0 +1,6 @@
+GPT2 vs GPT-NEO Scary Proportion Pval: 0.004
+GPT2 vs GPT-NEO Coherence Proportion Pval: 0.000
+GPT2 vs GPT2Spooky Scary Proportion Pval: 0.584
+GPT2 vs GPT2Spooky Coherence Proportion Pval: 0.020
+GPT-NEO vs GPT2Spooky Scary Proportion Pval: 0.020
+GPT-NEO vs GPT2Spooky Coherence Proportion Pval: 0.037

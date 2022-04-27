@@ -12,6 +12,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import random
+from statsmodels.stats.proportion import proportions_ztest
 
 SCRAPPER_LOG = '../Woby_Log/ScrapperLog.log'
 CORPUS_FILEPATH = '../corpus_data/'
@@ -182,7 +183,7 @@ gpt2_25_rank = list()
 gpt_neo_rank = list()
 gpt2spooky_rank = list()
 
-for i in range(5):
+for i in range(1):
 	sample = random.choice(test_sentences)
 	sample_prompt = ' '.join(sample.split()[:length])
 	prompts.append(sample_prompt)
@@ -214,3 +215,98 @@ eval_df['gpt_neo_25_rank'] = gpt_neo_rank
 eval_df['gpt2spooky_rank'] = gpt2spooky_rank
 
 eval_df.to_csv(results_path+'model_evaluation.csv', index=False)
+
+'''
+Plot Evaluation Results
+'''
+evaluated_results_df = pd.read_excel(results_path+'model_evaluation_checked.xlsx')
+evaluated_results_df = evaluated_results_df[~evaluated_results_df['gpt2_25_scary'].isnull()]
+
+print(evaluated_results_df.columns)
+
+# Scary portion
+gpt2_scary_portion = evaluated_results_df[evaluated_results_df['gpt2_25_scary'] > 0].sum()['gpt2_25_scary']/evaluated_results_df.shape[0]
+gpt_neo_scary_portion = evaluated_results_df[evaluated_results_df['gpt_neo_25_scary'] > 0].sum()['gpt_neo_25_scary']/evaluated_results_df.shape[0]
+gpt2spooky_scary_portion = evaluated_results_df[evaluated_results_df['gpt2spooky_scary'] > 0].sum()['gpt2spooky_scary']/evaluated_results_df.shape[0]
+
+# Coherence portion
+gpt2_coherent_portion = evaluated_results_df[evaluated_results_df['gpt2_25_choherent'] > 0].sum()['gpt2_25_choherent']/evaluated_results_df.shape[0]
+gpt_neo_coherent_portion = evaluated_results_df[evaluated_results_df['gpt_neo_25_coherent'] > 0].sum()['gpt_neo_25_coherent']/evaluated_results_df.shape[0]
+gpt2spooky_coherent_portion = evaluated_results_df[evaluated_results_df['gpt2spooky_coherent'] > 0].sum()['gpt2spooky_coherent']/evaluated_results_df.shape[0]
+
+model_cats = ['gpt2', 'gpt-neo', 'gpt2spooky']
+scary_portion = [gpt2_scary_portion, gpt_neo_scary_portion, gpt2spooky_scary_portion]
+coherent_portion = [gpt2_coherent_portion, gpt_neo_coherent_portion, gpt2spooky_coherent_portion]
+
+# Portion scary
+plt.rcParams["figure.figsize"] = (18,6)
+plt.bar(model_cats, scary_portion, color='cadetblue')
+plt.title('Proportion of Evaluated Stories that are Scary', fontsize=20)
+plt.xlabel('Model Evaluated', fontsize=8)
+plt.ylabel('Proportion of Evaluated Stories out of 30', fontsize=8)
+plt.xticks(rotation='70', fontsize=10)
+plt.savefig(results_path+'model_eval_scary_portion.png', bbox_inches='tight')
+
+# Portion coherence
+plt.rcParams["figure.figsize"] = (18,6)
+plt.bar(model_cats, coherent_portion, color='cadetblue')
+plt.title('Proportion of Evaluated Stories that are Coherent', fontsize=20)
+plt.xlabel('Model Evaluated', fontsize=8)
+plt.ylabel('Proportion of Evaluated Stories out of 30', fontsize=8)
+plt.xticks(rotation='70', fontsize=10)
+plt.savefig(results_path+'model_eval_coherent_portion.png', bbox_inches='tight')
+
+'''
+Hypothesis Testing Model Results
+'''
+with open(results_path+'hypothesis_testing_results.txt', 'w') as f:
+	f.write('')
+
+# 1. gpt2 vs gpt-neo
+# 1a. scary
+count = np.array(scary_portion[0:2])*evaluated_results_df.shape[0]
+nobs = np.array([evaluated_results_df.shape[0],evaluated_results_df.shape[0]])
+stat, pval = proportions_ztest(count, nobs)
+print('GPT2 vs GPT-NEO Scary Proportion Pval: {0:0.3f}\n'.format(pval))
+with open(results_path+'hypothesis_testing_results.txt', 'a') as f:
+	f.write('GPT2 vs GPT-NEO Scary Proportion Pval: {0:0.3f}\n'.format(pval))
+
+# 1b. coherence
+count = np.array(coherent_portion[0:2])*evaluated_results_df.shape[0]
+nobs = np.array([evaluated_results_df.shape[0],evaluated_results_df.shape[0]])
+stat, pval = proportions_ztest(count, nobs)
+print('GPT2 vs GPT-NEO Coherence Proportion Pval: {0:0.3f}\n'.format(pval))
+with open(results_path+'hypothesis_testing_results.txt', 'a') as f:
+	f.write('GPT2 vs GPT-NEO Coherence Proportion Pval: {0:0.3f}\n'.format(pval))
+
+# 2. gpt2 vs gpt2spooky
+# 2a. scary
+count = np.array([scary_portion[0],scary_portion[2]])*evaluated_results_df.shape[0]
+nobs = np.array([evaluated_results_df.shape[0],evaluated_results_df.shape[0]])
+stat, pval = proportions_ztest(count, nobs)
+print('GPT2 vs GPT2Spooky Scary Proportion Pval: {0:0.3f}\n'.format(pval))
+with open(results_path+'hypothesis_testing_results.txt', 'a') as f:
+	f.write('GPT2 vs GPT2Spooky Scary Proportion Pval: {0:0.3f}\n'.format(pval))
+# 2b. coherence
+count = np.array([coherent_portion[0],coherent_portion[2]])*evaluated_results_df.shape[0]
+nobs = np.array([evaluated_results_df.shape[0],evaluated_results_df.shape[0]])
+stat, pval = proportions_ztest(count, nobs)
+print('GPT2 vs GPT2Spooky Coherence Proportion Pval: {0:0.3f}\n'.format(pval))
+with open(results_path+'hypothesis_testing_results.txt', 'a') as f:
+	f.write('GPT2 vs GPT2Spooky Coherence Proportion Pval: {0:0.3f}\n'.format(pval))
+
+# 3. gpt2 vs gpt2spooky
+# 3a. scary
+count = np.array(scary_portion[1:3])*evaluated_results_df.shape[0]
+nobs = np.array([evaluated_results_df.shape[0],evaluated_results_df.shape[0]])
+stat, pval = proportions_ztest(count, nobs)
+print('GPT-NEO vs GPT2Spooky Scary Proportion Pval: {0:0.3f}\n'.format(pval))
+with open(results_path+'hypothesis_testing_results.txt', 'a') as f:
+	f.write('GPT-NEO vs GPT2Spooky Scary Proportion Pval: {0:0.3f}\n'.format(pval))
+# 3b. coherence
+count = np.array(coherent_portion[1:3])*evaluated_results_df.shape[0]
+nobs = np.array([evaluated_results_df.shape[0],evaluated_results_df.shape[0]])
+stat, pval = proportions_ztest(count, nobs)
+print('GPT-NEO vs GPT2Spooky Coherence Proportion Pval: {0:0.3f}\n'.format(pval))
+with open(results_path+'hypothesis_testing_results.txt', 'a') as f:
+	f.write('GPT-NEO vs GPT2Spooky Coherence Proportion Pval: {0:0.3f}\n'.format(pval))

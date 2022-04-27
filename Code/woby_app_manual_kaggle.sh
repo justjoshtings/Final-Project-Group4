@@ -1,6 +1,9 @@
 #!/bin/bash
 
 echo "Executing Woby: perform EDA/processing, and modeling, and launch the Flask app. Skipping Kaggle download."
+cd ../
+source myenv/bin/activate
+cd ./Code/
 
 # This is where user would run from
 echo "[Preprocess text corpus and perform EDA]..."

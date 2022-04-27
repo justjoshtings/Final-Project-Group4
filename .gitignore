@@ -20,11 +20,15 @@ nohup.out
 *ignore*
 gpt2_finetuned
 gpt2_neo_finetuned
+gpt2_25epochs
+gpt_neo_125M_25epochs
+gpt2spooky_25epochs
+gpt2spooky_pretrain
 gpt_neo_125M_model_finetuned.zip
 gpt2_model_finetuned.zip
-gpt2_25epochs
 *_finetuned
 *_pretrain
+*.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
