@@ -13,6 +13,9 @@ from sys import getsizeof
 import re
 import matplotlib.pyplot as plt
 import numpy as np
+import nltk
+nltk.download('stopwords')
+nltk.download('punkt')
 from nltk import word_tokenize, sent_tokenize
 from nltk import FreqDist
 from nltk.corpus import stopwords
@@ -307,8 +310,12 @@ class CorpusProcessor:
 			_sub_words = list()
 
 			for file in filenames:
-				with open(dirpath+'/'+file, 'r') as f:
-					_text = f.read()
+				try:
+					with open(dirpath+'/'+file, 'r') as f:
+						_text = f.read()
+				except UnicodeDecodeError:
+					with open(dirpath+'/'+file, 'r', encoding='windows-1252') as f:
+						_text = f.read()
 
 				_words = word_tokenize(_text)
 				tokens = [token.lower() for token in _words if token.lower() not in stop_words]
@@ -320,9 +327,18 @@ class CorpusProcessor:
 			sub_n_words[dirpath.split('/')[-1]] = _n_words/len(filenames)
 			sub_words[dirpath.split('/')[-1]] = _sub_words
 				
-		sub_n_stories.pop('')
-		sub_n_words.pop('')
-		sub_words.pop('')
+		try:
+			sub_n_stories.pop('')
+		except KeyError:
+			pass
+		try:
+			sub_n_words.pop('')
+		except KeyError:
+			pass
+		try:
+			sub_words.pop('')
+		except KeyError:
+			pass
 
 		subs = np.array(list(sub_n_stories.keys()))
 		n_stories = np.array(list(sub_n_stories.values()))
