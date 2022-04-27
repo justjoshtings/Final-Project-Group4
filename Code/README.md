@@ -171,17 +171,20 @@ chmod 600 ~/.kaggle/kaggle.json
 
 
 ## References
-1. https://huggingface.co/docs/transformers/training#finetune-in-native-pytorch
-2. https://huggingface.co/blog/how-to-generate
-3. https://huggingface.co/docs/transformers/main_classes/model#transformers.generation_utils.GenerationMixin
+1. Huggingface Transformer Finetuning: https://huggingface.co/docs/transformers/training#finetune-in-native-pytorch
+2. Huggingface How to Text Generation: https://huggingface.co/blog/how-to-generate
+3. Huggingface Text Generation: https://huggingface.co/docs/transformers/main_classes/model#transformers.generation_utils.GenerationMixin
 4. Fine tune GPT2: https://colab.research.google.com/drive/13dZVYEOMhXhkXWfvSMVM1TTtUDrT6Aeh?usp=sharing#scrollTo=gpt6tR83keZD
 5. BART: https://sshleifer.github.io/blog_v2/jupyter/2020/03/12/bart.html
-
+6. Flask Chatbot: https://dev.to/sahilrajput/build-a-chatbot-using-flask-in-5-minutes-574i
 
 #### TO DO
 * Final test of running from new ec2 [Wed]
       - test manual
       - test kaggle
+* Start report template
+
+
 * Final report [Thurs/Fri/Sat]
 * Presentation [Sat/Sun/Mon]
 * test on micro instance
