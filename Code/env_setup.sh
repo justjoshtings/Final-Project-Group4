@@ -47,3 +47,4 @@ cd ../Code/
 
 pip3 install flask
 pip3 install flask_session
+pip3 install statsmodels

@@ -1,32 +1,32 @@
 # Final-Project-Group4
 Woby Tales: Human-machine interactive storytelling engine.
 
-# MongoDB
-* [Setup](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-ubuntu/)
+# How to Run
+See [App Execution](https://github.com/justjoshtings/Final-Project-Group4/blob/main/Code/README.md#app-execution) for details
 
 # Data Sources
 Stories were sourced from the following sub-reddits
 
-Number | Subreddit | Filters/Flairs Used | Link 
+Number | Subreddit | Link 
 | --- | --- | --- | --- |
-| 1. | r/nosleep | N/A| [Link](https://www.reddit.com/r/nosleep/) | 
-| 2. | r/stayawake | N/A| [Link](https://www.reddit.com/r/stayawake/) | 
-| 3. | r/DarkTales | N/A| [Link](https://www.reddit.com/r/DarkTales/) | 
-| 4. | r/LetsNotMeet | N/A| [Link](https://www.reddit.com/r/LetsNotMeet/) | 
-| 5. | r/shortscarystories | N/A| [Link](https://www.reddit.com/r/shortscarystories/) | 
-| 6. | r/Thetruthishere | N/A| [Link](https://www.reddit.com/r/Thetruthishere/) | 
-| 7. | r/creepyencounters | N/A| [Link](https://www.reddit.com/r/creepyencounters/) | 
-| 8. | r/truescarystories | N/A| [Link](https://www.reddit.com/r/TrueScaryStories/) | 
-| 9. | r/Glitch_in_the_Matrix | N/A| [Link](https://www.reddit.com/r/Glitch_in_the_Matrix/) | 
-| 10. | r/Paranormal | N/A| [Link](https://www.reddit.com/r/Paranormal/) | 
-| 11. | r/Ghoststories | N/A| [Link](https://www.reddit.com/r/Ghoststories/) | 
-| 12. | r/libraryofshadows | N/A| [Link](https://www.reddit.com/r/libraryofshadows/) | 
-| 13. | r/UnresolvedMysteries | N/A| [Link](https://www.reddit.com/r/UnresolvedMysteries/) | 
-| 14. | r/TheChills | N/A| [Link](https://www.reddit.com/r/TheChills/) | 
-| 15. | r/scaredshitless | N/A| [Link](https://www.reddit.com/r/scaredshitless/) | 
-| 16. | r/scaryshortstories | N/A| [Link](https://www.reddit.com/r/scaryshortstories/) | 
-| 17. | r/Humanoidencounters | N/A| [Link](https://www.reddit.com/r/Humanoidencounters/) | 
-| 18. | r/DispatchingStories | N/A| [Link](https://www.reddit.com/r/DispatchingStories/) | 
+| 1. | r/nosleep | [Link](https://www.reddit.com/r/nosleep/) | 
+| 2. | r/stayawake | [Link](https://www.reddit.com/r/stayawake/) | 
+| 3. | r/DarkTales | [Link](https://www.reddit.com/r/DarkTales/) | 
+| 4. | r/LetsNotMeet | [Link](https://www.reddit.com/r/LetsNotMeet/) | 
+| 5. | r/shortscarystories | [Link](https://www.reddit.com/r/shortscarystories/) | 
+| 6. | r/Thetruthishere | [Link](https://www.reddit.com/r/Thetruthishere/) | 
+| 7. | r/creepyencounters | [Link](https://www.reddit.com/r/creepyencounters/) | 
+| 8. | r/truescarystories | [Link](https://www.reddit.com/r/TrueScaryStories/) | 
+| 9. | r/Glitch_in_the_Matrix | [Link](https://www.reddit.com/r/Glitch_in_the_Matrix/) | 
+| 10. | r/Paranormal | [Link](https://www.reddit.com/r/Paranormal/) | 
+| 11. | r/Ghoststories | [Link](https://www.reddit.com/r/Ghoststories/) | 
+| 12. | r/libraryofshadows | [Link](https://www.reddit.com/r/libraryofshadows/) | 
+| 13. | r/UnresolvedMysteries | [Link](https://www.reddit.com/r/UnresolvedMysteries/) | 
+| 14. | r/TheChills | [Link](https://www.reddit.com/r/TheChills/) | 
+| 15. | r/scaredshitless | [Link](https://www.reddit.com/r/scaredshitless/) | 
+| 16. | r/scaryshortstories | [Link](https://www.reddit.com/r/scaryshortstories/) | 
+| 17. | r/Humanoidencounters | [Link](https://www.reddit.com/r/Humanoidencounters/) | 
+| 18. | r/DispatchingStories | [Link](https://www.reddit.com/r/DispatchingStories/) | 
 
 See [Data Acquisition section for more details.](https://github.com/justjoshtings/Final-Project-Group4/blob/main/Code/README.md#data-acquisition)
 

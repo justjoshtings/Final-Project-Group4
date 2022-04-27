@@ -1,7 +1,4 @@
 #### TO DO
-* test on EC2 #2 env_setup.sh and woby_app.sh [Tues]
-
-* review evaluation table and choose best model + push .xlsx file to here + make a plot of results + do hypothesis testing on 3 [Wed]
 * setup Flask app with optimal model [Wed]
 * cleanup code base and github [Wed]
 * type out all readmes [Wed]
