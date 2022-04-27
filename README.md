@@ -1,5 +1,5 @@
-# Final-Project-Group4
-Woby Tales: Human-machine interactive storytelling engine finetuned for scary/creepy/chilling stories.
+# Woby Tales
+Human-machine interactive storytelling engine finetuned for scary/creepy/chilling stories. Finetuned on GPT2, GPT-NEO, and a custom pretrained GPT2 transformer networks.
 
 #### Woby can generate and continue its own scary story.
 ![woby_only](https://github.com/justjoshtings/Final-Project-Group4/blob/main/Code/results/woby_only.gif)
