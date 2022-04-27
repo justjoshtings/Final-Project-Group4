@@ -13,7 +13,7 @@ git clone https://github.com/justjoshtings/Final-Project-Group4.git
 
 cd ./Final-Project-Group4
 
-sudo apt install python3.8-venv
+sudo apt -y install python3.8-venv
 python3 -m venv ./myenv/
 source myenv/bin/activate
 
@@ -36,4 +36,11 @@ else
     echo "Set up Kaggle API with the following resources and download kaggle.json to ~/.kaggle/kaggle.json"
     echo "https://adityashrm21.github.io/Setting-Up-Kaggle/"
     echo "https://github.com/Kaggle/kaggle-api#api-credentials"
+    echo "Or ignore and download manually instead. Check README data-download section for more."
 fi
+
+# Make Log File
+mkdir ./Woby_Log/
+cd ./Woby_Log/
+touch ScrapperLog.log
+cd ../Code/

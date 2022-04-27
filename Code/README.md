@@ -1,43 +1,57 @@
-## To Do
-#### Model Training/Finetuning
-https://huggingface.co/docs/transformers/training#finetune-in-native-pytorch
-https://huggingface.co/blog/how-to-generate
-https://huggingface.co/docs/transformers/main_classes/model#transformers.generation_utils.GenerationMixin
-Fine tune GPT2: https://colab.research.google.com/drive/13dZVYEOMhXhkXWfvSMVM1TTtUDrT6Aeh?usp=sharing#scrollTo=gpt6tR83keZD
-BART: https://sshleifer.github.io/blog_v2/jupyter/2020/03/12/bart.html
-
-1. GPT-2 (no finetune)
-2. GPT-2 (finetuned 25 epochs)
-3. GPT-NEO (finetuned 25 epochs)
-4. GPT-NEO (no finetune)
-5. GPT2Spooky (pretrained and finetuned)
-
 #### TO DO
 * test on EC2 #2 env_setup.sh and woby_app.sh [Tues]
-* review evaluation table and choose best model + push .xlsx file to here [Tues]
-* setup Flask app with optimal model [Tues]
 
+* review evaluation table and choose best model + push .xlsx file to here + make a plot of results + do hypothesis testing on 3 [Wed]
+* setup Flask app with optimal model [Wed]
 * cleanup code base and github [Wed]
 * type out all readmes [Wed]
-* Final report [Wed/Thurs/Fri/Sat]
+      - Code
+            - results
+            - sample_results
+            - templates
+            - Woby_modules
+      - Group-Proposal
+      - Final-Report
+
+* Final report [Thurs/Fri/Sat]
+* Final test of running from new ec2 [Sat]
 * Presentation [Sun/Mon]
 
-#### Final shell script
-1. env_setup.sh - runs environment setup and installs needed software
-2. woby_app.sh - pulls data from Kaggle, downloads finetuned model weights, preprocesses data, evaluate models, launches Flask app with best model (model pretrainig and finetuning are skipped and downloaded weights are used instead)
-3. data_setup.sh - set up MongoDB database, pull data from Reddit APIs, and pushes data into Kaggle (DO NOT NEED TO RUN)
-
-#### Report & Presentation
 * final report word doc
 * presentation
 * github readmes
 
+# <a name="app-execution"></a>
+## App Execution
 
-## Execution
-Options:
-1. Scrape reddit, push to kaggle, pull from kaggle, preprocess, ... [not real option]
-2. Pull from kaggle, preprocess, ...
-3. Load from trained weights, ...
+After cloning the repo, navigate to the Code folder and set permissions for 4 bash scripts.
+```
+cd Final-Project-Group4/Code/
+chmod u+x env_setup.sh
+chmod u+x woby_app.sh
+chmod u+x woby_app_manual_kaggle.sh
+chmod u+x data_setup.sh
+```
+Below is the description of each script:
+1. env_setup.sh - runs environment setup and installs needed software
+2. woby_app.sh - pulls data from Kaggle, downloads finetuned model weights, preprocesses data, evaluate models, launches Flask app with best model (model pretrainig and finetuning are skipped and downloaded weights are used instead)
+3. data_setup.sh - set up MongoDB database, pull data from Reddit APIs, and pushes data into Kaggle (DO NOT NEED TO RUN)
+
+Next, you can either download data from Kaggle manually or setup Kaggle API credentials to download through a prepared script. See [data download](https://github.com/justjoshtings/Final-Project-Group4/blob/main/Code/README.md#data-download) section for more details on both options.
+
+Next, run the env_setup.sh script.
+```
+./env_setup.sh
+```
+Next, run woby_app.sh if you set up Kaggle API credentials. If not, run woby_app_manual_kaggle.sh instead.
+```
+./woby_app.sh
+```
+or
+```
+./woby_app_manual_kaggle.sh
+```
+Next, open a browser and navigate to **http://[your machine's public IP address]:8080** in order to see the Woby Flask App.
 
 ## Contents
 1. sample_results
@@ -124,7 +138,7 @@ Data can be accessed publicly on [Kaggle](https://www.kaggle.com/datasets/justjo
 **Two options to download data:**
 
 **Option 1:** Manual Download
-1. Manually download, unzip, and move all contents to **FINAL-PROJECT-GROUP4/corpus_data/**.
+1. Manually download, unzip, and move all contents within **archive** folder to **FINAL-PROJECT-GROUP4/corpus_data/**. You will need to create the corpus_data directory. You can use scp to move files from local machine to a remote machine if needed.
 
 **Option 2:** Use Kaggle API to download data
 1. Create a Kaggle account API. See [here](https://github.com/Kaggle/kaggle-api#api-credentials) or [here](https://adityashrm21.github.io/Setting-Up-Kaggle/).
@@ -136,11 +150,6 @@ mv [downloaded kaggle.json path] ~/.kaggle/kaggle.json
 ```
 chmod 600 ~/.kaggle/kaggle.json
 ```
-4. Run **kaggle_dataset.py**
-```
-cd /FINAL-PROJECT-GROUP4/Code/
-python3 kaggle_dataset.py
-```
 
 # <a name="data-preprocessing"></a>
 ## Data Preprocessing
@@ -150,3 +159,11 @@ python3 kaggle_dataset.py
 2. Remove any links.
 3. Remove '&amp', '&amp;#x200B;'.
 4. Remove '***' or more.
+
+
+## References
+1. https://huggingface.co/docs/transformers/training#finetune-in-native-pytorch
+2. https://huggingface.co/blog/how-to-generate
+3. https://huggingface.co/docs/transformers/main_classes/model#transformers.generation_utils.GenerationMixin
+4. Fine tune GPT2: https://colab.research.google.com/drive/13dZVYEOMhXhkXWfvSMVM1TTtUDrT6Aeh?usp=sharing#scrollTo=gpt6tR83keZD
+5. BART: https://sshleifer.github.io/blog_v2/jupyter/2020/03/12/bart.html

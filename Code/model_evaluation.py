@@ -182,7 +182,7 @@ gpt2_25_rank = list()
 gpt_neo_rank = list()
 gpt2spooky_rank = list()
 
-for i in range(50):
+for i in range(5):
 	sample = random.choice(test_sentences)
 	sample_prompt = ' '.join(sample.split()[:length])
 	prompts.append(sample_prompt)
