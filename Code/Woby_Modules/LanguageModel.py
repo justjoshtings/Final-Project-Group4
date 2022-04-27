@@ -308,18 +308,16 @@ class LanguageModel:
 			no_repeat_ngram_size (int): If set to int > 0, all ngrams of that size can only occur once., default = 2
 			early_stopping (Boolean):  Whether to stop the beam search when at least num_beams sentences are finished per batch or not, default = True
 		'''
-		print(self.tokenizer.encode(prompt, return_tensors='pt').shape)
-		try:
-			generated_encoded_texts = self.model.generate(input_ids=self.tokenizer.encode(prompt, return_tensors='pt'), 
-												max_length=max_length, 
-												top_k=50, 
-												top_p=0.95, 
-												do_sample=True, 
-												temperature=0.7, 
-												num_return_sequences=1, 
-												no_repeat_ngram_size=2, 
-												early_stopping=True
-												)
+		generated_encoded_texts = self.model.generate(input_ids=self.tokenizer.encode(prompt, return_tensors='pt'), 
+											max_length=max_length, 
+											top_k=50, 
+											top_p=0.95, 
+											do_sample=True, 
+											temperature=0.7, 
+											num_return_sequences=1, 
+											no_repeat_ngram_size=2, 
+											early_stopping=True
+											)
 
 		print(f"\n\n\nOutput {self.gpt_model_type}:\n" + 100 * '-')
 		for i, encoded_text in enumerate(generated_encoded_texts):
@@ -447,32 +445,27 @@ class LanguageModel_GPT_NEO(LanguageModel):
 		self.tokenizer = GPT2Tokenizer.from_pretrained(self.gpt_model_type, bos_token='<|startoftext|>', eos_token='<|endoftext|>', pad_token='<|pad|>')
 		self.model = GPTNeoForCausalLM.from_pretrained(self.gpt_model_type)
 
-	def load_weights(self):
+	def load_weights(self, model_weights_dir):
 		'''
 		Method to save model weights
 		
 		Params:
 			self: instance of object
+			model_weights_dir (str): model_weights_file
 		
 		Returns:
 			model (torch model): loaded model
 
 		'''
 		# Load a trained model and vocabulary that you have fine-tuned
-		self.model = GPTNeoForCausalLM.from_pretrained(self.model_weights_dir)
-		self.tokenizer = GPT2Tokenizer.from_pretrained(self.model_weights_dir, bos_token='<|startoftext|>', eos_token='<|endoftext|>', pad_token='<|pad|>')
-
-		device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-		print('Using device..', device)
-		self.model.to(device)
-
-		return self.model
+		self.model = GPTNeoForCausalLM.from_pretrained(model_weights_dir)
+		self.tokenizer = GPT2Tokenizer.from_pretrained(model_weights_dir, bos_token='<|startoftext|>', eos_token='<|endoftext|>', pad_token='<|pad|>')
 
 class LanguageModel_GPT2Spooky(LanguageModel):
 	'''
 	GPT2Spooky Model
 	'''
-	def __init__(self, corpus_filepath, random_state, train_data_loader, valid_data_loader, test_data_loader, pretrained_model_path='./results/model_weights/gpt2spooky_pretrain/', log_file=None):
+	def __init__(self, corpus_filepath, random_state, train_data_loader, valid_data_loader, test_data_loader, gpt_model_type='./results/model_weights/gpt2spooky_pretrain/', log_file=None):
 		'''
 		Params:
 			self: instance of object
@@ -481,35 +474,30 @@ class LanguageModel_GPT2Spooky(LanguageModel):
 			train_data_loader (torch.utils.data.DataLoader): train data loader
 			valid_data_loader (torch.utils.data.DataLoader): validation data loader
 			test_data_loader (torch.utils.data.DataLoader): test data loader
-			pretrained_model_path (str): path to pretrained model
+			gpt_model_type (str): path to pretrained model
 			log_file (str): default is None to not have logging, otherwise, specify logging path ../filepath/log.log
 		'''
 		LanguageModel.__init__(self, corpus_filepath, random_state, train_data_loader, valid_data_loader, test_data_loader, log_file=log_file)
-		self.pretrained_model_path = pretrained_model_path
+		self.gpt_model_type = gpt_model_type
 
-		self.tokenizer = GPT2Tokenizer.from_pretrained(self.pretrained_model_path, bos_token='<|startoftext|>', eos_token='<|endoftext|>', pad_token='<|pad|>')
-		self.model = GPTNeoForCausalLM.from_pretrained(self.pretrained_model_path)
+		self.tokenizer = GPT2Tokenizer.from_pretrained(self.gpt_model_type, bos_token='<|startoftext|>', eos_token='<|endoftext|>', pad_token='<|pad|>')
+		self.model = GPT2LMHeadModel.from_pretrained(self.gpt_model_type)
 
-	def load_weights(self):
+	def load_weights(self, model_weights_dir):
 		'''
 		Method to save model weights
 		
 		Params:
 			self: instance of object
+			model_weights_dir (str): model_weights_file
 		
 		Returns:
 			model (torch model): loaded model
 
 		'''
 		# Load a trained model and vocabulary that you have fine-tuned
-		self.model = GPTNeoForCausalLM.from_pretrained(self.pretrained_model_path, bos_token='<|startoftext|>', eos_token='<|endoftext|>', pad_token='<|pad|>')
-		self.tokenizer = GPT2Tokenizer.from_pretrained(self.pretrained_model_path)
-
-		device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
-		print('Using device..', device)
-		self.model.to(device)
-
-		return self.model
+		self.model = GPT2LMHeadModel.from_pretrained(model_weights_dir)
+		self.tokenizer = GPT2Tokenizer.from_pretrained(model_weights_dir, bos_token='<|startoftext|>', eos_token='<|endoftext|>', pad_token='<|pad|>')
 
 
 class CustomTextDataset(Dataset):

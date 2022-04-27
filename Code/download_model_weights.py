@@ -8,11 +8,15 @@ created: 4/14/2022
 import requests, zipfile, io, os, shutil
 
 def main():
-    zip_folder('./results/model_weights/gpt2', './results/model_weights/gpt2_model_finetuned')
-    zip_folder('./results/model_weights/gpt_neo_125M', './results/model_weights/gpt_neo_125M_model_finetuned')
+    zip_folder('./results/model_weights/gpt2_25epochs', './results/model_weights/gpt2_25epochs')
+    zip_folder('./results/model_weights/gpt_neo_125M_25epochs', './results/model_weights/gpt_neo_125M_25epochs')
+    zip_folder('./results/model_weights/gpt2spooky_pretrain', './results/model_weights/gpt2spooky_pretrain')
+    zip_folder('./results/model_weights/gpt2spooky_25epochs', './results/model_weights/gpt2spooky_25epochs')
 
-    download_and_unzip('https://github.com/justjoshtings/Final-Project-Group4/releases/download/v0.1.1-alpha/gpt2_model_finetuned.zip', './results/model_weights/gpt2_finetuned')
-    download_and_unzip('https://github.com/justjoshtings/Final-Project-Group4/releases/download/v0.1.1-alpha/gpt_neo_125M_model_finetuned.zip', './results/model_weights/gpt2_neo_finetuned')
+    download_and_unzip('https://github.com/justjoshtings/Final-Project-Group4/releases/download/v1.1/gpt2_25epochs.zip', './results/model_weights/gpt2_25epochs')
+    download_and_unzip('https://github.com/justjoshtings/Final-Project-Group4/releases/download/v1.1/gpt_neo_125M_25epochs.zip', './results/model_weights/gpt_neo_125M_25epochs')
+    download_and_unzip('https://github.com/justjoshtings/Final-Project-Group4/releases/download/v1.1/gpt2spooky_pretrain.zip', './results/model_weights/gpt2spooky_pretrain')
+    download_and_unzip('https://github.com/justjoshtings/Final-Project-Group4/releases/download/v1.1/gpt2spooky_25epochs.zip', './results/model_weights/gpt2spooky_25epochs')
 
 def zip_folder(dir_name, output_file_name):
     '''

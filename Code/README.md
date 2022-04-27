@@ -1,7 +1,4 @@
 ## To Do
-#### Preprocessing
-* network plot
-
 #### Model Training/Finetuning
 https://huggingface.co/docs/transformers/training#finetune-in-native-pytorch
 https://huggingface.co/blog/how-to-generate
@@ -10,29 +7,25 @@ Fine tune GPT2: https://colab.research.google.com/drive/13dZVYEOMhXhkXWfvSMVM1TT
 BART: https://sshleifer.github.io/blog_v2/jupyter/2020/03/12/bart.html
 
 1. GPT-2 (no finetune)
-2. GPT-2 (finetuned 10 epochs)
-3. GPT-NEO (no finetune)
-4. GPT-NEO (finetuned 10 epochs)
-5. GPT-NEO (finetuned 25 epochs)
-6. GPT-NEO (finetuned 25 epochs)
-7. my own model pretrained -> pretrainig from github lecture 9 [Wed/Thurs]
+2. GPT-2 (finetuned 25 epochs)
+3. GPT-NEO (finetuned 25 epochs)
+4. GPT-NEO (no finetune)
+5. GPT2Spooky (pretrained and finetuned)
 
-#### Model Evaluation [Thurs/Fri]
-* scores: use human evaluation + perplexity
-      - headers: prompt, rank
-      - rows: prompt text, original, gpt2, gpt2 ft, gptneo, gptneo ft, shelley
-      - google sheet link
-* compare to shelley prompts
-* scary prompts, moderately scary prompts, very scary prompts --> 30 prompts for each model
-* script to generate table to allow for evaluation.
+#### TO DO
+* test on EC2 #2 env_setup.sh and woby_app.sh [Tues]
+* review evaluation table and choose best model + push .xlsx file to here [Tues]
+* setup Flask app with optimal model [Tues]
+
+* cleanup code base and github [Wed]
+* type out all readmes [Wed]
+* Final report [Wed/Thurs/Fri/Sat]
+* Presentation [Sun/Mon]
 
 #### Final shell script
-- Download data from kaggle
-- Clean do EDA, preprocess
-- Download pretrained models
-- Load pretrained models
-- Do model evaluation/graphs
-- Start flask app
+1. env_setup.sh - runs environment setup and installs needed software
+2. woby_app.sh - pulls data from Kaggle, downloads finetuned model weights, preprocesses data, evaluate models, launches Flask app with best model (model pretrainig and finetuning are skipped and downloaded weights are used instead)
+3. data_setup.sh - set up MongoDB database, pull data from Reddit APIs, and pushes data into Kaggle (DO NOT NEED TO RUN)
 
 #### Report & Presentation
 * final report word doc
