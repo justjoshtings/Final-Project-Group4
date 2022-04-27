@@ -1,4 +1,4 @@
-# <img src="https://emojipedia-us.s3.amazonaws.com/source/skype/289/ghost_1f47b.png" width="32"> Woby Tales 
+# <img src="https://emojipedia-us.s3.amazonaws.com/source/skype/289/ghost_1f47b.png" width="28"> Woby Tales 
 Human-machine interactive storytelling engine finetuned for scary/creepy/chilling stories. Finetuned on GPT2, GPT-NEO, and a custom pretrained GPT2 transformer networks.
 
 #### Woby can generate and continue its own scary story.
