@@ -1,7 +1,7 @@
 #import files
 from flask import Flask, render_template, request, session
 from flask_session import Session
-# from waitress import serve
+from waitress import serve
 from Woby_Modules.LanguageModel import LanguageModel_GPT2, LanguageModel_GPT_NEO, CustomTextDatasetGPT2
 from transformers import Conversation, GPT2Tokenizer
 import pandas as pd
@@ -22,7 +22,7 @@ model_gpt2 = LanguageModel_GPT2(corpus_filepath=CORPUS_FILEPATH,
 								gpt_model_type='gpt2',
 								log_file=SCRAPPER_LOG)
 
-model_gpt2.load_weights('./results/model_weights/gpt2_10epochs_finetuned/')
+model_gpt2.load_weights('./results/model_weights/gpt2_25epochs/')
 
 app = Flask(__name__)
 # Check Configuration section for more details
@@ -49,6 +49,6 @@ def get_bot_response():
 if __name__ == "__main__":
     print('Running Woby App')
     port = 8080
-    # serve(app, host="0.0.0.0", port=someport, threads=8)
+    # serve(app, host="0.0.0.0", port=port, threads=8)
     app.run(port = port, debug = True, threaded = True)
 

@@ -1,6 +1,12 @@
 # Final-Project-Group4
 Woby Tales: Human-machine interactive storytelling engine.
 
+#### Woby can generate and continue its own scary story.
+![woby_only](https://github.com/justjoshtings/ms.pacman.ai/blob/main/Code/results/woby_only.gif)
+
+#### Woby also allows users to begin the story and continue along.
+![woby_human](https://github.com/justjoshtings/ms.pacman.ai/blob/main/Code/results/woby_human.gif)
+
 # How to Run
 See [App Execution](https://github.com/justjoshtings/Final-Project-Group4/blob/main/Code/README.md#app-execution) for details
 
@@ -8,7 +14,7 @@ See [App Execution](https://github.com/justjoshtings/Final-Project-Group4/blob/m
 Stories were sourced from the following sub-reddits
 
 Number | Subreddit | Link 
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | 1. | r/nosleep | [Link](https://www.reddit.com/r/nosleep/) | 
 | 2. | r/stayawake | [Link](https://www.reddit.com/r/stayawake/) | 
 | 3. | r/DarkTales | [Link](https://www.reddit.com/r/DarkTales/) | 
@@ -29,6 +35,14 @@ Number | Subreddit | Link
 | 18. | r/DispatchingStories | [Link](https://www.reddit.com/r/DispatchingStories/) | 
 
 See [Data Acquisition section for more details.](https://github.com/justjoshtings/Final-Project-Group4/blob/main/Code/README.md#data-acquisition)
+
+# Contents
+1. **Code**: This directory holds all relevant code for data acquisition, preprocessing, model building/training, evaluation, and front end.
+2. **Group-Proposal**: Group proposal description for project.
+3. **.gitignore**: gitignore file
+4. **LICENSE**: license description
+5. **README.md**: readme file
+6. **requirements.txt**: python requirements
 
 # References
 

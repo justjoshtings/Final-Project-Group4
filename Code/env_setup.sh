@@ -19,6 +19,10 @@ source myenv/bin/activate
 
 # Install python requirements
 pip3 install -r requirements.txt
+# pip3 install flask
+# pip3 install flask_session
+# pip3 install statsmodels
+# pip3 install waitress
 
 # Set up Kaggle API
 echo "Setup Kaggle API and download kaggle.json"
@@ -44,7 +48,3 @@ mkdir ./Woby_Log/
 cd ./Woby_Log/
 touch ScrapperLog.log
 cd ../Code/
-
-pip3 install flask
-pip3 install flask_session
-pip3 install statsmodels

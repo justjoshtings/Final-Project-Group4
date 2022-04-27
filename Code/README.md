@@ -1,22 +1,7 @@
-#### TO DO
-* setup Flask app with optimal model [Wed]
-* cleanup code base and github [Wed]
-* type out all readmes [Wed]
-      - Code
-            - results
-            - sample_results
-            - templates
-            - Woby_modules
-      - Group-Proposal
-      - Final-Report
+# Code
 
-* Final report [Thurs/Fri/Sat]
-* Final test of running from new ec2 [Sat]
-* Presentation [Sun/Mon]
-
-* final report word doc
-* presentation
-* github readmes
+## Description
+This directory holds all relevant code for data acquisition, preprocessing, model building/training, evaluation, and front end.
 
 # <a name="app-execution"></a>
 ## App Execution
@@ -58,10 +43,28 @@ or
 Next, open a browser and navigate to **http://[your machine's public IP address]:8080** in order to see the Woby Flask App.
 
 ## Contents
-1. sample_results
-2. Woby_keys
-3. Woby_Modules
-4.
+1. **results**: directory to save results about corpus, model weights, plots, and other results.
+2. **sample_results**: sample json returns from Reddit PSAW and PRAW APIs
+3. **templates**: html templates for Woby Flask Front End
+2. **Woby_keys**: save credentials here
+3. **Woby_Modules**: core custom python modules for Woby 
+4. **app.py**: to start Flask app
+5. **clear_data.py**: script to clear corpus data from MongoDB and locally saved .txt files
+6. **data_setup.sh**: bash script to run set up MongoDB database, pull data from Reddit APIs, and pushes data into Kaggle 
+7. **download_model_weights.py**: script to download Github release .zip files
+8. **env_setup.sh**: bash script to perform environment and project setup for machine
+9. **gpt2spooky_pretraining.py**: script to perform gpt2spooky pretraining on our custom corpus
+10. **kaggle_dataset_down.py**: script to download Kaggle datasets
+11. **kaggle_dataset_push.py**: script to upload Kaggle datasets
+12. **model_evaluation.py**: script to perform modeling evaluation
+13. **modeling.py**: script to perform modeling
+14. **post_scrape_reddit.py**: script to run post scrape_reddit.py to remove duplicated stories and create .csv of metadata to save in /corpus
+15. **preprocess_corpus.py**: script to preprocess corpus data
+16. **scrape_reddit.py**: script to scrape Reddit to get corpus data and then save to disk/MongoDB
+17. **test_RedditAPI.py**: testing script of RedditAPI module
+18. **test.py**: script to perform some ad-hoc testing of models, not used for application core
+19. **woby_app_manual_kaggle.sh**: bash script to perform EDA/processing, and modeling, and launch the Flask app. Skipping Kaggle download.
+20. **woby_app.sh**: bash script to perform EDA/processing, and modeling, and launch the Flask app.
 
 # <a name="data-acquisition"></a>
 ## Data Acquisition
@@ -173,3 +176,12 @@ chmod 600 ~/.kaggle/kaggle.json
 3. https://huggingface.co/docs/transformers/main_classes/model#transformers.generation_utils.GenerationMixin
 4. Fine tune GPT2: https://colab.research.google.com/drive/13dZVYEOMhXhkXWfvSMVM1TTtUDrT6Aeh?usp=sharing#scrollTo=gpt6tR83keZD
 5. BART: https://sshleifer.github.io/blog_v2/jupyter/2020/03/12/bart.html
+
+
+#### TO DO
+* Final test of running from new ec2 [Wed]
+      - test manual
+      - test kaggle
+* Final report [Thurs/Fri/Sat]
+* Presentation [Sat/Sun/Mon]
+* test on micro instance
