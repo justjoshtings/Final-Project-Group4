@@ -1,6 +1,6 @@
 """
-modeling.py
-Script to perform modeling
+model_evaluation.py
+Script to perform modeling evaluation
 
 author: @justjoshtings
 created: 4/15/2022

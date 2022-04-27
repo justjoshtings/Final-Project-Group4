@@ -11,10 +11,8 @@
 /corpus_original[delete]/
 /.vscode/
 /Code/flask_session/
-*keys*
-*key*
-*keys*.py
-*keys*.txt
+credentials.json
+reddit_keys.py
 nohup.out
 *.bin
 *ignore*
