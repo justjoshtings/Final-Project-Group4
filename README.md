@@ -2,10 +2,10 @@
 Woby Tales: Human-machine interactive storytelling engine.
 
 #### Woby can generate and continue its own scary story.
-![woby_only](https://github.com/justjoshtings/ms.pacman.ai/blob/main/Code/results/woby_only.gif)
+![woby_only](https://github.com/justjoshtings/Final-Project-Group4/blob/main/Code/results/woby_only.gif)
 
 #### Woby also allows users to begin the story and continue along.
-![woby_human](https://github.com/justjoshtings/ms.pacman.ai/blob/main/Code/results/woby_human.gif)
+![woby_human](https://github.com/justjoshtings/Final-Project-Group4/blob/main/Code/results/woby_human.gif)
 
 # How to Run
 See [App Execution](https://github.com/justjoshtings/Final-Project-Group4/blob/main/Code/README.md#app-execution) for details
