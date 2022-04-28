@@ -2,6 +2,9 @@
 
 echo "Executing Woby data download from Kaggle, perform EDA/processing, and modeling, and launch the Flask app."
 
+# Delete data if already exists to redownload
+rm -r ../corpus_data
+
 # This is where user would run from
 echo "[Pulling data from Kaggle]..."
 python3 kaggle_dataset_down.py

@@ -59,7 +59,7 @@ class KaggleAPI:
         self.command_line_execution(command)
 
         # Edit dataset-metadata.json
-        with open(f'{path_to_data}/dataset-metadata.json', 'r+') as f:
+        with open(f'{path_to_data}dataset-metadata.json', 'r+') as f:
             data = json.load(f)
             data['id'] = f"{self.kaggle_username}/{data_url_end_point}"
             data['title'] = f"{data_title}"

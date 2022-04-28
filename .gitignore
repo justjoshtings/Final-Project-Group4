@@ -27,6 +27,7 @@ gpt2_model_finetuned.zip
 *_finetuned
 *_pretrain
 *.zip
+kaggle.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
