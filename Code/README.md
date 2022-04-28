@@ -42,7 +42,7 @@ or
 ```
 ./woby_app_manual_kaggle.sh
 ```
-Next, open a browser and navigate to **http://[your machine's public IP address]:8080** in order to see the Woby Flask App.
+Next, open a browser and navigate to **http://127.0.0.1:8080** in order to see the Woby Flask App.
 
 ## Contents
 1. **results**: directory to save results about corpus, model weights, plots, and other results.
