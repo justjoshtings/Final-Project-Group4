@@ -24,6 +24,12 @@ pip3 install -r requirements.txt
 # pip3 install statsmodels
 # pip3 install waitress
 
+# Make Log File
+mkdir ./Woby_Log/
+cd ./Woby_Log/
+touch ScrapperLog.log
+cd ../Code/
+
 # Set up Kaggle API
 echo "Setup Kaggle API and download kaggle.json"
 
@@ -42,9 +48,3 @@ else
     echo "https://github.com/Kaggle/kaggle-api#api-credentials"
     echo "Or ignore and download manually instead. Check README data-download section for more."
 fi
-
-# Make Log File
-mkdir ./Woby_Log/
-cd ./Woby_Log/
-touch ScrapperLog.log
-cd ../Code/
