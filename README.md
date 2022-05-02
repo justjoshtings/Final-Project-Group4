@@ -1,5 +1,5 @@
-# <img src="https://emojipedia-us.s3.amazonaws.com/source/skype/289/ghost_1f47b.png" width="28"> Woby Tales 
-Human-machine interactive storytelling engine finetuned for scary/creepy/chilling stories. Finetuned on GPT2, GPT-NEO, and a custom pretrained GPT2 transformer networks.
+# <img src="https://emojipedia-us.s3.amazonaws.com/source/skype/289/ghost_1f47b.png" width="28"> Woby's Spooky Tales 
+Human-machine interactive storytelling engine finetuned for scary/creepy/chilling stories. Finetuned on GPT2, GPT-NEO, and a custom pretrained GPT2 transformer networks on custom corpus for the downstream task of text generation. Integrated final model into a chatbot front end for human-machine interface.
 
 #### Woby can generate and continue its own scary story.
 ![woby_only](https://github.com/justjoshtings/Final-Project-Group4/blob/main/Code/results/woby_only.gif)
