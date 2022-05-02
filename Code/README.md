@@ -3,6 +3,11 @@
 ## Description
 This directory holds all relevant code for data acquisition, preprocessing, model building/training, evaluation, and front end.
 
+## Code Architecture
+![code_architecture_data_acquisition](https://github.com/justjoshtings/Final-Project-Group4/blob/main/Code/results/code_architecture_data_acquisition.png)
+
+![code_architecture_preprocessing_modeling](https://github.com/justjoshtings/Final-Project-Group4/blob/main/Code/results/code_architecture_preprocess_modeling.png)
+
 # <a name="app-execution"></a>
 ## App Execution
 
