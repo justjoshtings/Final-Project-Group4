@@ -183,12 +183,3 @@ chmod 600 ~/.kaggle/kaggle.json
 4. Fine tune GPT2: https://colab.research.google.com/drive/13dZVYEOMhXhkXWfvSMVM1TTtUDrT6Aeh?usp=sharing#scrollTo=gpt6tR83keZD
 5. BART: https://sshleifer.github.io/blog_v2/jupyter/2020/03/12/bart.html
 6. Flask Chatbot: https://dev.to/sahilrajput/build-a-chatbot-using-flask-in-5-minutes-574i
-
-#### TO DO
-* Final test of running from new ec2 [Wed]
-      - test manual
-      - test kaggle
-
-* Final report [Thurs/Fri/Sat]
-* Presentation [Sat/Sun/Mon]
-* test on micro instance
